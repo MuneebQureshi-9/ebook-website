@@ -7,19 +7,20 @@ COPY . .
 RUN npm run build
 
 # --- Stage 2: Production PHP Apache ---
-FROM php:8.2-apache
+FROM php:8.4-apache
 
 # Install system dependencies & PHP extensions
-RUN apt-get update && apt-get install -y \
-    libpng-dev \
-    libjpeg-dev \
-    libfreetype6-dev \
-    libzip-dev \
-    zip \
-    unzip \
-    git \
-    && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install gd pdo pdo_mysql bcmath zip
+RUN apt-get update && apt-get install -y \\
+    libpng-dev \\
+    libjpeg-dev \\
+    libfreetype6-dev \\
+    libzip-dev \\
+    libpq-dev \\
+    zip \\
+    unzip \\
+    git \\
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \\
+    && docker-php-ext-install gd pdo_mysql pdo_pgsql bcmath zip
 
 # Enable Apache rewrite module
 RUN a2enmod rewrite
