@@ -12,7 +12,7 @@
 
         <div class="grid grid--two">
             @include('components.image-card', [
-                'image' => asset('images/banner/banner 2.png'),
+                'image' => asset('images/banner/banner 2.webp'),
                 'alt' => 'Blog banner for author resources',
                 'eyebrow' => 'Editorial teaser',
                 'title' => 'Content ideas that can sit next to strong imagery.',

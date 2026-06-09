@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\URL;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,6 +20,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        // Force URL scheme from APP_URL so generated asset links use correct protocol
+        $appUrl = config('app.url') ?? env('APP_URL');
+        if ($appUrl) {
+            $scheme = parse_url($appUrl, PHP_URL_SCHEME) ?: 'https';
+            URL::forceScheme($scheme);
+        }
     }
 }

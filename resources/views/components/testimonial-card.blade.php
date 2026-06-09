@@ -1,5 +1,5 @@
 @props([
-  'image' => '/images/author/testimonial author crop.png',
+  'image' => '/images/author/testimonial author crop.webp',
   'alt' => 'Author portrait',
   'quote' => '',
   'author' => '',

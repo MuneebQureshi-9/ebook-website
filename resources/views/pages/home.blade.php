@@ -13,7 +13,7 @@
                 'title' => 'The Silent Feather',
                 'description' => 'Elegant contrast, quiet depth, and a premium editorial finish.',
                 'meta' => 'Best for literary fiction branding',
-                'image' => asset('images/covers/the silent feather cover.png'),
+                'image' => asset('images/covers/the silent feather cover.webp'),
                 'alt' => 'The Silent Feather cover artwork',
             ],
             [
@@ -22,7 +22,7 @@
                 'title' => 'The Winding Path',
                 'description' => 'Warm gradients and a strong typographic hierarchy that reads instantly.',
                 'meta' => 'Built for launch pages and ads',
-                'image' => asset('images/covers/the winding path cover.png'),
+                'image' => asset('images/covers/the winding path cover.webp'),
                 'alt' => 'The Winding Path cover artwork',
             ],
             [
@@ -31,7 +31,7 @@
                 'title' => 'Threshold of Shadow',
                 'description' => 'Moody, cinematic treatment with enough breathing room for copy overlays.',
                 'meta' => 'Ideal for premium author positioning',
-                'image' => asset('images/covers/threshold of shadow cover.png'),
+                'image' => asset('images/covers/threshold of shadow cover.webp'),
                 'alt' => 'Threshold of Shadow cover artwork',
             ],
         ], [
@@ -41,7 +41,7 @@
                 'title' => 'The Silent Feather',
                 'description' => 'Elegant contrast, quiet depth, and a premium editorial finish.',
                 'meta' => 'Best for literary fiction branding',
-                'image' => asset('images/covers/the silent feather cover.png'),
+                'image' => asset('images/covers/the silent feather cover.webp'),
                 'alt' => 'The Silent Feather cover artwork',
             ],
             [
@@ -50,7 +50,7 @@
                 'title' => 'The Winding Path',
                 'description' => 'Warm gradients and a strong typographic hierarchy that reads instantly.',
                 'meta' => 'Built for launch pages and ads',
-                'image' => asset('images/covers/the winding path cover.png'),
+                'image' => asset('images/covers/the winding path cover.webp'),
                 'alt' => 'The Winding Path cover artwork',
             ],
             [
@@ -59,7 +59,7 @@
                 'title' => 'Threshold of Shadow',
                 'description' => 'Moody, cinematic treatment with enough breathing room for copy overlays.',
                 'meta' => 'Ideal for premium author positioning',
-                'image' => asset('images/covers/threshold of shadow cover.png'),
+                'image' => asset('images/covers/threshold of shadow cover.webp'),
                 'alt' => 'Threshold of Shadow cover artwork',
             ],
         ]);
@@ -67,33 +67,21 @@
         $featuredTestimonials = [
             [
                 'type' => 'testimonial',
-                'title' => 'Sarah Jenkins',
-                'description' => '"I was completely overwhelmed by the publishing process until I found this team. They handled everything from formatting to distribution, and my book hit the top 100 in its category within a week. Highly recommended!"',
-                'meta' => 'Author of "The Midnight Garden"',
+                'title' => 'James Carter',
+                'description' => '"I felt totally lost since I had an amazing idea but didn’t know how to publish it. They took me through every step of the process and within a couple of weeks my book went live on Amazon and being discovered by readers. I was unable to do this without them."',
+                'meta' => '',
             ],
             [
                 'type' => 'testimonial',
-                'title' => 'David Chen',
-                'description' => '"The cover design alone was worth the investment. It perfectly captured the mood of my sci-fi thriller. The marketing push they organized generated more sales in a month than I had in a year of self-promotion."',
-                'meta' => 'Indie Sci-Fi Author',
+                'title' => 'Emma Richardson',
+                'description' => '"This was not a service that helped me publish my book it was a plan to help my business. They showed me how to use my book to get customers and I have already gotten three big clients because of them. My book is really helping me get business."',
+                'meta' => '',
             ],
             [
                 'type' => 'testimonial',
-                'title' => 'Elena Rodriguez',
-                'description' => '"As a first-time author, I needed someone to hold my hand through the editing and publishing maze. Their editorial team was tough but fair, and the final manuscript is infinitely better for it."',
-                'meta' => 'Debut Novelist',
-            ],
-            [
-                'type' => 'testimonial',
-                'title' => 'Marcus Thorne',
-                'description' => '"What impressed me most was their strategic approach to the launch. They didn\'t just upload the book; they built a campaign. The ROI has been fantastic, and I\'m already writing my next book with them."',
-                'meta' => 'Business & Finance Author',
-            ],
-            [
-                'type' => 'testimonial',
-                'title' => 'Rachel Adams',
-                'description' => '"I had previously self-published with mediocre results. They completely rebranded my series, updated the covers, and optimized my Amazon listings. My daily sales have tripled since we started working together."',
-                'meta' => 'Romance Author',
+                'title' => 'Daniel Brooks',
+                'description' => '"For months, my book didn’t sell at all. Then, experts at Pookybooks updated my Amazon listing, and a new marketing plan was put in place. After these changes, I sold 50 copies in just 30 days. It was a huge improvement, going from zero sales to 50 in such a short time. This made a big difference for my book."',
+                'meta' => '',
             ],
         ];
     @endphp
@@ -108,7 +96,7 @@
 
     <section class="section-block container">
         <div class="section-heading reveal" data-reveal>
-            <p class="section-kicker">Value proposition</p>
+            <p class="section-kicker">Turn Your Ideas into Reality</p>
             <h2>{{ $ebook['value_props']['title'] }}</h2>
             <p>{{ $ebook['value_props']['intro'] }}</p>
         </div>
@@ -122,8 +110,8 @@
     </section>
 
     @include('components.slide-scale', [
-        'title' => 'Premium covers made to hold attention',
-        'subtitle' => 'A curated set of cover treatments that can be reused across launch pages, ads, and author branding.',
+        'title' => 'Premium E-Book Covers to Sell & Scale',
+        'subtitle' => 'We create covers that perform on shelves and grab the attention of the audience online.',
         'slides' => $featuredCovers,
     ])
 
@@ -147,16 +135,16 @@
     </section>
 
     @include('components.slide-scale', [
-        'kicker' => 'Social proof',
-        'title' => 'What clients say after launch',
-        'subtitle' => 'Real results from authors who trusted us with their books.',
+        'kicker' => 'Social Proof',
+        'title' => 'What Our Clients Are Saying',
+        'subtitle' => 'We have helped hundreds of writers to earn their first dollar from writing. Read what our customers are saying about our services:',
         'slides' => $featuredTestimonials,
     ])
 
     <section class="section-block container">
         <div class="section-heading reveal" data-reveal>
             <p class="section-kicker">Services</p>
-            <h2>Publishing and author services built for visibility</h2>
+            <h2>Our Diverse E-Book Writing Services to Get More Visibility</h2>
         </div>
         <div class="grid grid--three">
             @foreach ($ebook['services'] as $slug => $service)
@@ -167,8 +155,8 @@
 
     <section id="faq" class="section-block container">
         <div class="section-heading reveal" data-reveal>
-            <p class="section-kicker">FAQ</p>
-            <h2>FREQUENTLY ASKED QUESTIONS</h2>
+            <p class="section-kicker">FAQs</p>
+            <h2>Frequently Asked Questions</h2>
         </div>
         @include('components.faq-accordion', ['faqs' => $ebook['faqs']])
         <div class="section-cta">

@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Code Review Graph — EBook Website</title>
+  <meta name="description" content="Interactive code architecture and review graph for the EBook Website Laravel project." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0a0b10;
+      --surface:   #111320;
+      --panel:     #161928;
+      --border:    #252840;
+      --accent1:   #7c6af7;
+      --accent2:   #3ecfcf;
+      --accent3:   #f76ca0;
+      --accent4:   #f7b26c;
+      --accent5:   #6cf7a0;
+      --text:      #e8eaf6;
+      --muted:     #7b82b0;
+      --radius:    14px;
+      --radius-sm: 8px;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+
+    /* ── HEADER ── */
+    header {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(10,11,16,0.82);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 32px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .logo {
+      display: flex; align-items: center; gap: 12px;
+    }
+    .logo-icon {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: linear-gradient(135deg, var(--accent1), var(--accent2));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+    }
+    .logo h1 { font-size: 16px; font-weight: 700; letter-spacing: -.3px; }
+    .logo span { font-size: 12px; color: var(--muted); font-weight: 400; }
+    .header-badge {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 12px; color: var(--muted);
+    }
+    .badge {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 4px 10px; border-radius: 100px;
+      background: var(--surface); border: 1px solid var(--border);
+      font-size: 11px; font-weight: 500;
+    }
+    .badge.green  { color: var(--accent5); border-color: rgba(108,247,160,.25); background: rgba(108,247,160,.08); }
+    .badge.purple { color: var(--accent1); border-color: rgba(124,106,247,.25); background: rgba(124,106,247,.08); }
+    .dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+
+    /* ── MAIN LAYOUT ── */
+    main {
+      position: relative; z-index: 1;
+      max-width: 1400px; margin: 0 auto;
+      padding: 32px 24px 64px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: auto;
+      gap: 20px;
+    }
+
+    /* ── CARDS ── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color .2s, transform .2s, box-shadow .2s;
+    }
+    .card:hover {
+      border-color: rgba(124,106,247,.4);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(0,0,0,.4), 0 0 0 1px rgba(124,106,247,.08);
+    }
+    .card::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at top left, rgba(124,106,247,.04) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .card-title {
+      font-size: 11px; font-weight: 600; letter-spacing: .08em;
+      text-transform: uppercase; color: var(--muted);
+      margin-bottom: 18px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .card-title .icon { font-size: 14px; }
+
+    /* span helpers */
+    .span-2 { grid-column: span 2; }
+    .span-3 { grid-column: span 3; }
+
+    /* ── SCORE RING ── */
+    .score-section {
+      display: flex; align-items: center; gap: 24px;
+    }
+    .ring-wrap {
+      flex-shrink: 0;
+      position: relative; width: 100px; height: 100px;
+    }
+    .ring-wrap svg { transform: rotate(-90deg); }
+    .ring-bg  { fill: none; stroke: var(--border); stroke-width: 8; }
+    .ring-fg  {
+      fill: none; stroke-width: 8; stroke-linecap: round;
+      stroke-dasharray: 283;
+      stroke-dashoffset: 283;
+      transition: stroke-dashoffset 1.4s cubic-bezier(.4,0,.2,1);
+    }
+    .ring-label {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+    }
+    .ring-label .num  { font-size: 24px; font-weight: 800; line-height: 1; }
+    .ring-label .sub  { font-size: 10px; color: var(--muted); font-weight: 500; margin-top: 2px; }
+    .score-details { flex: 1; }
+    .score-details h2 { font-size: 22px; font-weight: 800; margin-bottom: 4px; }
+    .score-details p  { font-size: 13px; color: var(--muted); line-height: 1.5; }
+    .score-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+    .tag {
+      font-size: 11px; padding: 3px 9px; border-radius: 100px;
+      font-weight: 500;
+    }
+    .tag-ok   { background: rgba(108,247,160,.1); color: var(--accent5); border: 1px solid rgba(108,247,160,.2); }
+    .tag-warn { background: rgba(247,178,108,.1); color: var(--accent4); border: 1px solid rgba(247,178,108,.2); }
+    .tag-err  { background: rgba(247,108,160,.1); color: var(--accent3); border: 1px solid rgba(247,108,160,.2); }
+
+    /* ── METRICS ROW ── */
+    .metrics-row {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+    }
+    .metric-item {
+      background: var(--panel); border-radius: var(--radius-sm);
+      padding: 16px; text-align: center;
+      border: 1px solid var(--border);
+      transition: background .2s;
+    }
+    .metric-item:hover { background: #1a1e30; }
+    .metric-val  { font-size: 28px; font-weight: 800; letter-spacing: -.5px; }
+    .metric-lbl  { font-size: 11px; color: var(--muted); margin-top: 4px; font-weight: 500; }
+    .metric-sub  { font-size: 11px; margin-top: 6px; font-weight: 500; }
+    .up   { color: var(--accent5); }
+    .down { color: var(--accent3); }
+
+    /* ── ROUTE MAP ── */
+    .route-list { display: flex; flex-direction: column; gap: 8px; }
+    .route-item {
+      display: flex; align-items: center; gap: 10px;
+      background: var(--panel); border-radius: var(--radius-sm);
+      padding: 10px 14px; font-size: 12px;
+      border: 1px solid var(--border);
+      transition: all .18s;
+      cursor: default;
+    }
+    .route-item:hover { border-color: rgba(62,207,207,.3); background: rgba(62,207,207,.04); }
+    .method {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px;
+      min-width: 46px; text-align: center;
+    }
+    .GET  { background: rgba(108,247,160,.12); color: var(--accent5); }
+    .POST { background: rgba(247,178,108,.12); color: var(--accent4); }
+    .route-path {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px; color: var(--accent2); flex: 1;
+    }
+    .route-handler { font-size: 11px; color: var(--muted); }
+    .route-name {
+      font-size: 10px; padding: 2px 6px; border-radius: 4px;
+      background: rgba(124,106,247,.12); color: var(--accent1);
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    /* ── ARCHITECTURE GRAPH (SVG Canvas) ── */
+    #arch-svg {
+      width: 100%; height: 280px;
+      display: block;
+    }
+    .arch-node {
+      cursor: pointer;
+      transition: filter .2s;
+    }
+    .arch-node:hover { filter: brightness(1.3) drop-shadow(0 0 8px var(--accent1)); }
+
+    /* ── FILE SIZE BAR ── */
+    .file-bars { display: flex; flex-direction: column; gap: 9px; }
+    .file-bar-row {
+      display: flex; align-items: center; gap: 10px; font-size: 12px;
+    }
+    .file-name {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px; color: var(--text); width: 180px;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .bar-track {
+      flex: 1; height: 6px; background: var(--border); border-radius: 3px; overflow: hidden;
+    }
+    .bar-fill {
+      height: 100%; border-radius: 3px;
+      transform: scaleX(0); transform-origin: left;
+      transition: transform 1s cubic-bezier(.4,0,.2,1);
+    }
+    .file-size { font-size: 11px; color: var(--muted); min-width: 52px; text-align: right; }
+
+    /* ── DEPENDENCY WHEEL ── */
+    #dep-svg { width: 100%; height: 260px; display: block; }
+
+    /* ── REVIEW CHECKLIST ── */
+    .checklist { display: flex; flex-direction: column; gap: 8px; }
+    .check-item {
+      display: flex; align-items: flex-start; gap: 10px;
+      padding: 10px 12px; border-radius: var(--radius-sm);
+      background: var(--panel); border: 1px solid var(--border);
+      font-size: 12px; line-height: 1.5;
+      transition: border-color .18s;
+    }
+    .check-item:hover { border-color: var(--accent1); }
+    .check-icon { font-size: 15px; margin-top: 1px; flex-shrink: 0; }
+    .check-title { font-weight: 600; margin-bottom: 2px; }
+    .check-desc  { color: var(--muted); }
+
+    /* ── TIMELINE ── */
+    .timeline { display: flex; flex-direction: column; gap: 0; }
+    .tl-item {
+      display: flex; gap: 14px; position: relative; padding-bottom: 16px;
+    }
+    .tl-item:last-child { padding-bottom: 0; }
+    .tl-line {
+      display: flex; flex-direction: column; align-items: center; width: 20px; flex-shrink: 0;
+    }
+    .tl-dot {
+      width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; margin-top: 3px;
+    }
+    .tl-line .tl-stem {
+      flex: 1; width: 2px; background: var(--border); margin-top: 4px;
+    }
+    .tl-item:last-child .tl-stem { display: none; }
+    .tl-content h4 { font-size: 12px; font-weight: 600; }
+    .tl-content p  { font-size: 11px; color: var(--muted); margin-top: 2px; line-height: 1.5; }
+
+    /* ── TECH STACK ── */
+    .stack-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;
+    }
+    .stack-item {
+      background: var(--panel); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); padding: 12px 14px;
+      display: flex; align-items: center; gap: 10px;
+      transition: border-color .18s, background .18s;
+      cursor: default;
+    }
+    .stack-item:hover { border-color: var(--accent2); background: rgba(62,207,207,.04); }
+    .stack-emoji { font-size: 20px; }
+    .stack-name  { font-size: 12px; font-weight: 600; }
+    .stack-ver   { font-size: 10px; color: var(--muted); }
+
+    /* ── TOOLTIP ── */
+    #tooltip {
+      position: fixed; pointer-events: none; z-index: 999;
+      background: var(--panel); border: 1px solid var(--border);
+      border-radius: 8px; padding: 8px 12px;
+      font-size: 12px; max-width: 220px;
+      box-shadow: 0 4px 20px rgba(0,0,0,.5);
+      opacity: 0; transition: opacity .15s;
+    }
+
+    /* ── GLOW EFFECTS ── */
+    .glow-purple { box-shadow: 0 0 0 1px rgba(124,106,247,.15), inset 0 1px 0 rgba(255,255,255,.04); }
+    .glow-teal   { box-shadow: 0 0 0 1px rgba(62,207,207,.15), inset 0 1px 0 rgba(255,255,255,.04); }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .card { animation: fadeUp .5s ease both; }
+    .card:nth-child(1)  { animation-delay: .05s; }
+    .card:nth-child(2)  { animation-delay: .1s;  }
+    .card:nth-child(3)  { animation-delay: .15s; }
+    .card:nth-child(4)  { animation-delay: .2s;  }
+    .card:nth-child(5)  { animation-delay: .25s; }
+    .card:nth-child(6)  { animation-delay: .3s;  }
+    .card:nth-child(7)  { animation-delay: .35s; }
+    .card:nth-child(8)  { animation-delay: .4s;  }
+    .card:nth-child(9)  { animation-delay: .45s; }
+    .card:nth-child(10) { animation-delay: .5s;  }
+
+    @media (max-width: 1100px) {
+      main { grid-template-columns: 1fr 1fr; }
+      .span-3 { grid-column: span 2; }
+    }
+    @media (max-width: 700px) {
+      main { grid-template-columns: 1fr; }
+      .span-2, .span-3 { grid-column: span 1; }
+      .metrics-row { grid-template-columns: repeat(2,1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="logo">
+    <div class="logo-icon">📚</div>
+    <div>
+      <h1>Code Review Graph</h1>
+      <span>EBook Website · Laravel 11 · Muneeb Qureshi</span>
+    </div>
+  </div>
+  <div class="header-badge">
+    <span class="badge green"><span class="dot"></span>Analysed</span>
+    <span class="badge purple">v11.6.0</span>
+    <span id="ts" class="badge" style="color:var(--muted)"></span>
+  </div>
+</header>
+
+<main>
+
+  <!-- 1. OVERALL SCORE ── span-2 -->
+  <div class="card span-2 glow-purple" id="card-score">
+    <div class="card-title"><span class="icon">🎯</span>Overall Code-Health Score</div>
+    <div class="score-section">
+      <div class="ring-wrap">
+        <svg viewBox="0 0 100 100" width="100" height="100">
+          <circle class="ring-bg" cx="50" cy="50" r="45"/>
+          <circle class="ring-fg" id="ring" cx="50" cy="50" r="45" stroke="url(#ringGrad)"/>
+          <defs>
+            <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%"   stop-color="#7c6af7"/>
+              <stop offset="100%" stop-color="#3ecfcf"/>
+            </linearGradient>
+          </defs>
+        </svg>
+        <div class="ring-label">
+          <div class="num" style="background:linear-gradient(135deg,#7c6af7,#3ecfcf);-webkit-background-clip:text;-webkit-text-fill-color:transparent">82</div>
+          <div class="sub">/100</div>
+        </div>
+      </div>
+      <div class="score-details">
+        <h2>Good — Production-Ready Skeleton</h2>
+        <p>Clean Laravel 11 structure with well-separated concerns. Routes, controllers, views, and config are
+          neatly organised. A few areas — test coverage, auth, and error handling — can be strengthened.</p>
+        <div class="score-tags">
+          <span class="tag tag-ok">✓ Clean routing</span>
+          <span class="tag tag-ok">✓ Blade components</span>
+          <span class="tag tag-ok">✓ Input validation</span>
+          <span class="tag tag-warn">⚠ No test coverage</span>
+          <span class="tag tag-warn">⚠ No mail sending</span>
+          <span class="tag tag-err">✗ No auth guards</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. TECH STACK ── span-1 -->
+  <div class="card" id="card-stack">
+    <div class="card-title"><span class="icon">🛠</span>Tech Stack</div>
+    <div class="stack-grid">
+      <div class="stack-item"><span class="stack-emoji">🐘</span><div><div class="stack-name">PHP</div><div class="stack-ver">^8.2</div></div></div>
+      <div class="stack-item"><span class="stack-emoji">🔴</span><div><div class="stack-name">Laravel</div><div class="stack-ver">^11.31</div></div></div>
+      <div class="stack-item"><span class="stack-emoji">⚡</span><div><div class="stack-name">Vite</div><div class="stack-ver">^6.0</div></div></div>
+      <div class="stack-item"><span class="stack-emoji">🎨</span><div><div class="stack-name">Tailwind</div><div class="stack-ver">^3.4</div></div></div>
+      <div class="stack-item"><span class="stack-emoji">🗂</span><div><div class="stack-name">SQLite</div><div class="stack-ver">default</div></div></div>
+      <div class="stack-item"><span class="stack-emoji">🎠</span><div><div class="stack-name">Embla</div><div class="stack-ver">^8.6</div></div></div>
+    </div>
+  </div>
+
+  <!-- 3. METRICS ── span-3 -->
+  <div class="card span-3">
+    <div class="card-title"><span class="icon">📊</span>Project Metrics</div>
+    <div class="metrics-row">
+      <div class="metric-item">
+        <div class="metric-val" style="color:var(--accent1)">4</div>
+        <div class="metric-lbl">Controllers</div>
+        <div class="metric-sub up">↑ well-structured</div>
+      </div>
+      <div class="metric-item">
+        <div class="metric-val" style="color:var(--accent2)">11</div>
+        <div class="metric-lbl">Blade Components</div>
+        <div class="metric-sub up">↑ reusable UI</div>
+      </div>
+      <div class="metric-item">
+        <div class="metric-val" style="color:var(--accent5)">7</div>
+        <div class="metric-lbl">Routes Defined</div>
+        <div class="metric-sub up">↑ all named</div>
+      </div>
+      <div class="metric-item">
+        <div class="metric-val" style="color:var(--accent4)">3</div>
+        <div class="metric-lbl">DB Migrations</div>
+        <div class="metric-sub down">↓ none custom</div>
+      </div>
+      <div class="metric-item">
+        <div class="metric-val" style="color:var(--accent3)">0</div>
+        <div class="metric-lbl">Test Coverage</div>
+        <div class="metric-sub down">↓ needs tests</div>
+      </div>
+      <div class="metric-item">
+        <div class="metric-val" style="color:var(--accent1)">1</div>
+        <div class="metric-lbl">Eloquent Model</div>
+        <div class="metric-sub" style="color:var(--muted)">User only</div>
+      </div>
+      <div class="metric-item">
+        <div class="metric-val" style="color:var(--accent2)">6</div>
+        <div class="metric-lbl">Page Views</div>
+        <div class="metric-sub up">↑ complete pages</div>
+      </div>
+      <div class="metric-item">
+        <div class="metric-val" style="color:var(--accent5)">5</div>
+        <div class="metric-lbl">Validated Fields</div>
+        <div class="metric-sub up">↑ contact form</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. ROUTE MAP ── span-2 -->
+  <div class="card span-2 glow-teal">
+    <div class="card-title"><span class="icon">🗺</span>Route Map</div>
+    <div class="route-list">
+      <div class="route-item">
+        <span class="method GET">GET</span>
+        <span class="route-path">/</span>
+        <span class="route-handler">PageController@home</span>
+        <span class="route-name">home</span>
+      </div>
+      <div class="route-item">
+        <span class="method GET">GET</span>
+        <span class="route-path">/about</span>
+        <span class="route-handler">PageController@about</span>
+        <span class="route-name">about</span>
+      </div>
+      <div class="route-item">
+        <span class="method GET">GET</span>
+        <span class="route-path">/blog</span>
+        <span class="route-handler">PageController@blog</span>
+        <span class="route-name">blog</span>
+      </div>
+      <div class="route-item">
+        <span class="method GET">GET</span>
+        <span class="route-path">/services</span>
+        <span class="route-handler">ServiceController@index</span>
+        <span class="route-name">services.index</span>
+      </div>
+      <div class="route-item">
+        <span class="method GET">GET</span>
+        <span class="route-path">/services/{slug}</span>
+        <span class="route-handler">ServiceController@show</span>
+        <span class="route-name">services.show</span>
+      </div>
+      <div class="route-item">
+        <span class="method GET">GET</span>
+        <span class="route-path">/contact</span>
+        <span class="route-handler">ContactController@create</span>
+        <span class="route-name">contact</span>
+      </div>
+      <div class="route-item">
+        <span class="method POST">POST</span>
+        <span class="route-path">/contact</span>
+        <span class="route-handler">ContactController@store</span>
+        <span class="route-name">contact.store</span>
+      </div>
+      <div class="route-item">
+        <span class="method GET">GET</span>
+        <span class="route-path">/thank-you</span>
+        <span class="route-handler">ContactController@thankYou</span>
+        <span class="route-name">contact.thank-you</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. REVIEW CHECKLIST ── span-1 -->
+  <div class="card">
+    <div class="card-title"><span class="icon">✅</span>Review Checklist</div>
+    <div class="checklist">
+      <div class="check-item">
+        <span class="check-icon">✅</span>
+        <div><div class="check-title">Named Routes</div><div class="check-desc">All 8 routes have expressive names.</div></div>
+      </div>
+      <div class="check-item">
+        <span class="check-icon">✅</span>
+        <div><div class="check-title">Request Validation</div><div class="check-desc">ContactController validates 5 fields.</div></div>
+      </div>
+      <div class="check-item">
+        <span class="check-icon">✅</span>
+        <div><div class="check-title">404 Handling</div><div class="check-desc">abort_if() used in ServiceController.</div></div>
+      </div>
+      <div class="check-item">
+        <span class="check-icon">⚠️</span>
+        <div><div class="check-title">No Mail Dispatch</div><div class="check-desc">Contact form stores nothing & sends no email.</div></div>
+      </div>
+      <div class="check-item">
+        <span class="check-icon">⚠️</span>
+        <div><div class="check-title">Config-driven Data</div><div class="check-desc">All data from config('ebook') — consider DB.</div></div>
+      </div>
+      <div class="check-item">
+        <span class="check-icon">❌</span>
+        <div><div class="check-title">No Unit Tests</div><div class="check-desc">tests/ directory has zero test files.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. ARCHITECTURE GRAPH ── span-2 -->
+  <div class="card span-2">
+    <div class="card-title"><span class="icon">🔗</span>Architecture Dependency Graph</div>
+    <svg id="arch-svg" viewBox="0 0 680 280">
+      <defs>
+        <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+          <path d="M0,0 L0,6 L8,3 z" fill="#7c6af7" opacity=".6"/>
+        </marker>
+        <filter id="glow">
+          <feGaussianBlur stdDeviation="3" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+
+      <!-- EDGES -->
+      <!-- Request → Router -->
+      <line x1="60" y1="50" x2="160" y2="50" stroke="#7c6af7" stroke-width="1.5" stroke-dasharray="4,3" opacity=".5" marker-end="url(#arrow)"/>
+      <!-- Router → PageCtrl -->
+      <line x1="210" y1="40" x2="300" y2="40" stroke="#3ecfcf" stroke-width="1.5" stroke-dasharray="4,3" opacity=".5" marker-end="url(#arrow)"/>
+      <!-- Router → ServiceCtrl -->
+      <line x1="210" y1="50" x2="300" y2="120" stroke="#3ecfcf" stroke-width="1.5" stroke-dasharray="4,3" opacity=".5" marker-end="url(#arrow)"/>
+      <!-- Router → ContactCtrl -->
+      <line x1="210" y1="60" x2="300" y2="200" stroke="#3ecfcf" stroke-width="1.5" stroke-dasharray="4,3" opacity=".5" marker-end="url(#arrow)"/>
+      <!-- PageCtrl → Views -->
+      <line x1="400" y1="40" x2="500" y2="50" stroke="#6cf7a0" stroke-width="1.5" stroke-dasharray="4,3" opacity=".5" marker-end="url(#arrow)"/>
+      <!-- ServiceCtrl → Views -->
+      <line x1="400" y1="125" x2="500" y2="100" stroke="#6cf7a0" stroke-width="1.5" stroke-dasharray="4,3" opacity=".5" marker-end="url(#arrow)"/>
+      <!-- ServiceCtrl → config -->
+      <line x1="380" y1="140" x2="500" y2="180" stroke="#f7b26c" stroke-width="1.5" stroke-dasharray="4,3" opacity=".5" marker-end="url(#arrow)"/>
+      <!-- ContactCtrl → Views -->
+      <line x1="400" y1="200" x2="500" y2="150" stroke="#6cf7a0" stroke-width="1.5" stroke-dasharray="4,3" opacity=".5" marker-end="url(#arrow)"/>
+      <!-- ContactCtrl → config -->
+      <line x1="400" y1="210" x2="500" y2="185" stroke="#f7b26c" stroke-width="1.5" stroke-dasharray="4,3" opacity=".5" marker-end="url(#arrow)"/>
+      <!-- PageCtrl → config -->
+      <line x1="380" y1="55" x2="500" y2="172" stroke="#f7b26c" stroke-width="1" stroke-dasharray="3,4" opacity=".35" marker-end="url(#arrow)"/>
+      <!-- Views → Blade Components -->
+      <line x1="600" y1="90" x2="630" y2="170" stroke="#f76ca0" stroke-width="1.5" stroke-dasharray="4,3" opacity=".5" marker-end="url(#arrow)"/>
+
+      <!-- NODES -->
+      <!-- Browser/Request -->
+      <g class="arch-node" id="an-req" data-tip="HTTP Request from browser">
+        <rect x="10" y="28" width="90" height="44" rx="8" fill="#1a1e30" stroke="#7c6af7" stroke-width="1.5"/>
+        <text x="55" y="45" text-anchor="middle" fill="#7c6af7" font-size="11" font-weight="600" font-family="Inter">🌐 Browser</text>
+        <text x="55" y="62" text-anchor="middle" fill="#7b82b0" font-size="9" font-family="Inter">HTTP Request</text>
+      </g>
+
+      <!-- Router -->
+      <g class="arch-node" id="an-router" data-tip="routes/web.php — 8 named routes across 3 controllers">
+        <rect x="160" y="22" width="90" height="54" rx="8" fill="#1a1e30" stroke="#3ecfcf" stroke-width="1.5"/>
+        <text x="205" y="42" text-anchor="middle" fill="#3ecfcf" font-size="11" font-weight="600" font-family="Inter">📍 Router</text>
+        <text x="205" y="57" text-anchor="middle" fill="#7b82b0" font-size="9" font-family="Inter">routes/web.php</text>
+        <text x="205" y="70" text-anchor="middle" fill="#7b82b0" font-size="9" font-family="Inter">8 routes</text>
+      </g>
+
+      <!-- PageController -->
+      <g class="arch-node" id="an-page" data-tip="PageController — home(), about(), blog()  (27 lines)">
+        <rect x="300" y="16" width="100" height="50" rx="8" fill="#1a1e30" stroke="#6cf7a0" stroke-width="1.5"/>
+        <text x="350" y="36" text-anchor="middle" fill="#6cf7a0" font-size="10" font-weight="600" font-family="Inter">PageController</text>
+        <text x="350" y="50" text-anchor="middle" fill="#7b82b0" font-size="9" font-family="Inter">home · about · blog</text>
+        <text x="350" y="62" text-anchor="middle" fill="#7b82b0" font-size="9" font-family="Inter">27 lines</text>
+      </g>
+
+      <!-- ServiceController -->
+      <g class="arch-node" id="an-svc" data-tip="ServiceController — index(), show()  (28 lines) — uses abort_if()">
+        <rect x="300" y="96" width="100" height="56" rx="8" fill="#1a1e30" stroke="#6cf7a0" stroke-width="1.5"/>
+        <text x="350" y="115" text-anchor="middle" fill="#6cf7a0" font-size="10" font-weight="600" font-family="Inter">ServiceCtrl</text>
+        <text x="350" y="130" text-anchor="middle" fill="#7b82b0" font-size="9" font-family="Inter">index · show</text>
+        <text x="350" y="143" text-anchor="middle" fill="#7b82b0" font-size="9" font-family="Inter">28 lines · abort_if</text>
+      </g>
+
+      <!-- ContactController -->
+      <g class="arch-node" id="an-contact" data-tip="ContactController — create(), store(), thankYou()  (42 lines) — validates 5 fields">
+        <rect x="300" y="178" width="100" height="62" rx="8" fill="#1a1e30" stroke="#6cf7a0" stroke-width="1.5"/>
+        <text x="350" y="197" text-anchor="middle" fill="#6cf7a0" font-size="10" font-weight="600" font-family="Inter">ContactCtrl</text>
+        <text x="350" y="212" text-anchor="middle" fill="#7b82b0" font-size="9" font-family="Inter">create · store · thankYou</text>
+        <text x="350" y="227" text-anchor="middle" fill="#7b82b0" font-size="9" font-family="Inter">42 lines · validates</text>
+        <text x="350" y="236" text-anchor="middle" fill="#f7b26c" font-size="9" font-family="Inter">⚠ no mail dispatch</text>
+      </g>
+
+      <!-- Blade Views -->
+      <g class="arch-node" id="an-views" data-tip="resources/views/pages — 6 blade templates (home, about, blog, services, contact, thank-you)">
+        <rect x="500" y="30" width="100" height="56" rx="8" fill="#1a1e30" stroke="#f76ca0" stroke-width="1.5"/>
+        <text x="550" y="50" text-anchor="middle" fill="#f76ca0" font-size="10" font-weight="600" font-family="Inter">🖼 Blade Views</text>
+        <text x="550" y="65" text-anchor="middle" fill="#7b82b0" font-size="9" font-family="Inter">pages/ — 6 templates</text>
+        <text x="550" y="78" text-anchor="middle" fill="#7b82b0" font-size="9" font-family="Inter">8.6 KB largest</text>
+      </g>
+
+      <!-- Config -->
+      <g class="arch-node" id="an-config" data-tip="config('ebook') — all data (services, copy, metadata) is config-driven. Consider moving to DB.">
+        <rect x="500" y="158" width="100" height="50" rx="8" fill="#1a1e30" stroke="#f7b26c" stroke-width="1.5"/>
+        <text x="550" y="178" text-anchor="middle" fill="#f7b26c" font-size="10" font-weight="600" font-family="Inter">⚙ config(ebook)</text>
+        <text x="550" y="193" text-anchor="middle" fill="#7b82b0" font-size="9" font-family="Inter">static data source</text>
+        <text x="550" y="204" text-anchor="middle" fill="#f7b26c" font-size="9" font-family="Inter">⚠ consider DB</text>
+      </g>
+
+      <!-- Blade Components -->
+      <g class="arch-node" id="an-comp" data-tip="resources/views/components — 11 reusable components: navbar, footer, hero, cards, slider...">
+        <rect x="620" y="148" width="54" height="64" rx="8" fill="#1a1e30" stroke="#f76ca0" stroke-width="1.5"/>
+        <text x="647" y="171" text-anchor="middle" fill="#f76ca0" font-size="10" font-weight="700" font-family="Inter">🧩</text>
+        <text x="647" y="185" text-anchor="middle" fill="#f76ca0" font-size="9" font-weight="600" font-family="Inter">11</text>
+        <text x="647" y="197" text-anchor="middle" fill="#7b82b0" font-size="8" font-family="Inter">components</text>
+        <text x="647" y="208" text-anchor="middle" fill="#7b82b0" font-size="8" font-family="Inter">reusable</text>
+      </g>
+    </svg>
+  </div>
+
+  <!-- 7. FILE SIZE CHART ── span-1 -->
+  <div class="card">
+    <div class="card-title"><span class="icon">📁</span>File Size Overview</div>
+    <div class="file-bars" id="file-bars"></div>
+  </div>
+
+  <!-- 8. REVIEW INSIGHTS ── span-1 -->
+  <div class="card">
+    <div class="card-title"><span class="icon">💡</span>Recommendations</div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-line">
+          <div class="tl-dot" style="background:var(--accent3)"></div>
+          <div class="tl-stem"></div>
+        </div>
+        <div class="tl-content">
+          <h4 style="color:var(--accent3)">High Priority · Add Mail Dispatch</h4>
+          <p>ContactController@store redirects without saving or emailing. Use Laravel's <code style="font-family:JetBrains Mono;font-size:10px;color:var(--accent2)">Mail::send()</code> or a Mailable class.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-line">
+          <div class="tl-dot" style="background:var(--accent3)"></div>
+          <div class="tl-stem"></div>
+        </div>
+        <div class="tl-content">
+          <h4 style="color:var(--accent3)">High Priority · Write Feature Tests</h4>
+          <p>No PHPUnit tests found. At minimum, test route responses and the contact form validation rules.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-line">
+          <div class="tl-dot" style="background:var(--accent4)"></div>
+          <div class="tl-stem"></div>
+        </div>
+        <div class="tl-content">
+          <h4 style="color:var(--accent4)">Medium · Persist Contact Submissions</h4>
+          <p>Create a <code style="font-family:JetBrains Mono;font-size:10px;color:var(--accent2)">contacts</code> migration and Eloquent model to store leads in SQLite/MySQL.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-line">
+          <div class="tl-dot" style="background:var(--accent4)"></div>
+          <div class="tl-stem"></div>
+        </div>
+        <div class="tl-content">
+          <h4 style="color:var(--accent4)">Medium · CSRF & Rate Limiting</h4>
+          <p>Add <code style="font-family:JetBrains Mono;font-size:10px;color:var(--accent2)">throttle:6,1</code> middleware to the POST /contact route to prevent spam submissions.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-line">
+          <div class="tl-dot" style="background:var(--accent5)"></div>
+          <div class="tl-stem"></div>
+        </div>
+        <div class="tl-content">
+          <h4 style="color:var(--accent5)">Low · Extract Service Data to DB</h4>
+          <p>Services live in <code style="font-family:JetBrains Mono;font-size:10px;color:var(--accent2)">config('ebook')</code>. A <code style="font-family:JetBrains Mono;font-size:10px;color:var(--accent2)">services</code> table + Filament admin would unlock CMS-like editing.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-line">
+          <div class="tl-dot" style="background:var(--accent5)"></div>
+        </div>
+        <div class="tl-content">
+          <h4 style="color:var(--accent5)">Low · Add SEO Meta Tags</h4>
+          <p>Ensure every page passes unique <code style="font-family:JetBrains Mono;font-size:10px;color:var(--accent2)">&lt;title&gt;</code> and <code style="font-family:JetBrains Mono;font-size:10px;color:var(--accent2)">og:*</code> tags from the layout.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 9. DIMENSION SCORES ── span-2 -->
+  <div class="card span-2">
+    <div class="card-title"><span class="icon">📐</span>Dimension Scores</div>
+    <div id="dim-chart" style="padding:8px 0"></div>
+  </div>
+
+  <!-- 10. COMPONENT MAP ── span-1 -->
+  <div class="card">
+    <div class="card-title"><span class="icon">🧩</span>Blade Components</div>
+    <div class="route-list" style="gap:6px">
+      <div class="route-item" style="padding:8px 12px">
+        <span style="font-size:13px">🧭</span>
+        <span class="route-path">navbar.blade.php</span>
+        <span class="route-handler">15.6 KB</span>
+      </div>
+      <div class="route-item" style="padding:8px 12px">
+        <span style="font-size:13px">🦶</span>
+        <span class="route-path">footer.blade.php</span>
+        <span class="route-handler">1.9 KB</span>
+      </div>
+      <div class="route-item" style="padding:8px 12px">
+        <span style="font-size:13px">🦸</span>
+        <span class="route-path">hero-section.blade.php</span>
+        <span class="route-handler">3.8 KB</span>
+      </div>
+      <div class="route-item" style="padding:8px 12px">
+        <span style="font-size:13px">🖼</span>
+        <span class="route-path">image-card.blade.php</span>
+        <span class="route-handler">1.2 KB</span>
+      </div>
+      <div class="route-item" style="padding:8px 12px">
+        <span style="font-size:13px">🎠</span>
+        <span class="route-path">slider.blade.php</span>
+        <span class="route-handler">2.4 KB</span>
+      </div>
+      <div class="route-item" style="padding:8px 12px">
+        <span style="font-size:13px">🗣</span>
+        <span class="route-path">testimonial-card.blade.php</span>
+        <span class="route-handler">1.6 KB</span>
+      </div>
+      <div class="route-item" style="padding:8px 12px">
+        <span style="font-size:13px">❓</span>
+        <span class="route-path">faq-accordion.blade.php</span>
+        <span class="route-handler">0.2 KB</span>
+      </div>
+      <div class="route-item" style="padding:8px 12px">
+        <span style="font-size:13px">🔘</span>
+        <span class="route-path">cta-button.blade.php</span>
+        <span class="route-handler">0.2 KB</span>
+      </div>
+      <div class="route-item" style="padding:8px 12px">
+        <span style="font-size:13px">🃏</span>
+        <span class="route-path">service-card.blade.php</span>
+        <span class="route-handler">0.4 KB</span>
+      </div>
+      <div class="route-item" style="padding:8px 12px">
+        <span style="font-size:13px">📐</span>
+        <span class="route-path">slide-scale.blade.php</span>
+        <span class="route-handler">4.3 KB</span>
+      </div>
+      <div class="route-item" style="padding:8px 12px">
+        <span style="font-size:13px">📋</span>
+        <span class="route-path">slider-item.blade.php</span>
+        <span class="route-handler">1.8 KB</span>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- TOOLTIP -->
+<div id="tooltip"></div>
+
+<script>
+  /* ── timestamp ── */
+  const ts = document.getElementById('ts');
+  ts.textContent = new Date().toLocaleString('en-GB', { day:'2-digit', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit' });
+
+  /* ── ring animation ── */
+  const SCORE = 82;
+  const CIRCUMFERENCE = 283;
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      const ring = document.getElementById('ring');
+      ring.style.strokeDashoffset = CIRCUMFERENCE - (CIRCUMFERENCE * SCORE / 100);
+    }, 300);
+  });
+
+  /* ── file bars ── */
+  const files = [
+    { name: 'navbar.blade.php',       bytes: 15616, color: '#7c6af7' },
+    { name: 'welcome.blade.php',      bytes: 22326, color: '#3ecfcf' },
+    { name: 'home.blade.php',         bytes: 8570,  color: '#6cf7a0' },
+    { name: 'slide-scale.blade.php',  bytes: 4329,  color: '#f76ca0' },
+    { name: 'hero-section.blade.php', bytes: 3824,  color: '#f7b26c' },
+    { name: 'contact.blade.php',      bytes: 3327,  color: '#7c6af7' },
+    { name: 'about.blade.php',        bytes: 2995,  color: '#3ecfcf' },
+    { name: 'slider.blade.php',       bytes: 2399,  color: '#6cf7a0' },
+    { name: 'ContactController.php',  bytes: 1255,  color: '#f76ca0' },
+    { name: 'app.blade.php',          bytes: 1090,  color: '#f7b26c' },
+  ];
+  const maxBytes = Math.max(...files.map(f => f.bytes));
+  const container = document.getElementById('file-bars');
+  files.forEach(f => {
+    const pct = (f.bytes / maxBytes * 100).toFixed(1);
+    const row = document.createElement('div');
+    row.className = 'file-bar-row';
+    row.innerHTML = `
+      <span class="file-name">${f.name}</span>
+      <div class="bar-track">
+        <div class="bar-fill" style="width:${pct}%;background:${f.color}"></div>
+      </div>
+      <span class="file-size">${(f.bytes/1024).toFixed(1)} KB</span>
+    `;
+    container.appendChild(row);
+  });
+  // animate bars in
+  setTimeout(() => {
+    document.querySelectorAll('.bar-fill').forEach(b => b.style.transform = 'scaleX(1)');
+  }, 400);
+
+  /* ── dimension scores chart ── */
+  const dims = [
+    { label: 'Code Structure',    score: 90, color: '#7c6af7' },
+    { label: 'Route Design',      score: 95, color: '#3ecfcf' },
+    { label: 'Validation',        score: 75, color: '#6cf7a0' },
+    { label: 'Test Coverage',     score: 0,  color: '#f76ca0' },
+    { label: 'Security',          score: 68, color: '#f7b26c' },
+    { label: 'UI Components',     score: 88, color: '#7c6af7' },
+    { label: 'Documentation',     score: 40, color: '#3ecfcf' },
+    { label: 'Performance',       score: 80, color: '#6cf7a0' },
+  ];
+  const dimChart = document.getElementById('dim-chart');
+  dims.forEach(d => {
+    const row = document.createElement('div');
+    row.style.cssText = 'display:flex;align-items:center;gap:12px;margin-bottom:10px;font-size:12px;';
+    row.innerHTML = `
+      <span style="width:130px;color:#e8eaf6;font-weight:500">${d.label}</span>
+      <div style="flex:1;height:8px;background:#252840;border-radius:4px;overflow:hidden;">
+        <div class="dim-bar" style="height:100%;border-radius:4px;background:${d.color};width:${d.score}%;transform:scaleX(0);transform-origin:left;transition:transform 1s cubic-bezier(.4,0,.2,1)"></div>
+      </div>
+      <span style="min-width:32px;text-align:right;color:${d.score < 30 ? '#f76ca0' : d.score < 70 ? '#f7b26c' : '#6cf7a0'};font-weight:700">${d.score}</span>
+    `;
+    dimChart.appendChild(row);
+  });
+  setTimeout(() => {
+    document.querySelectorAll('.dim-bar').forEach(b => b.style.transform = 'scaleX(1)');
+  }, 600);
+
+  /* ── arch-node tooltips ── */
+  const tooltip = document.getElementById('tooltip');
+  document.querySelectorAll('.arch-node').forEach(node => {
+    node.addEventListener('mouseenter', e => {
+      tooltip.textContent = node.dataset.tip || '';
+      tooltip.style.opacity = '1';
+    });
+    node.addEventListener('mousemove', e => {
+      tooltip.style.left = (e.clientX + 14) + 'px';
+      tooltip.style.top  = (e.clientY - 10) + 'px';
+    });
+    node.addEventListener('mouseleave', () => {
+      tooltip.style.opacity = '0';
+    });
+  });
+</script>
+</body>
+</html>

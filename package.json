@@ -17,6 +17,7 @@
     "dependencies": {
         "embla-carousel": "^8.6.0",
         "embla-carousel-autoplay": "^8.6.0",
-        "embla-carousel-class-names": "^8.6.0"
+        "embla-carousel-class-names": "^8.6.0",
+        "sharp": "^0.34.5"
     }
 }

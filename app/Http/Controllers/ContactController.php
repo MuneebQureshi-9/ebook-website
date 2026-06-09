@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ContactInquiry;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class ContactController extends Controller
 {
@@ -28,8 +30,11 @@ class ContactController extends Controller
             'message' => ['required', 'string', 'min:10'],
         ]);
 
+        // Send email to the site owner
+        Mail::to('munibquresh890@gmail.com')->send(new ContactInquiry($validated));
+
         return redirect()
-            ->route('contact.thank-you')
+            ->back()
             ->with('success', 'Thanks for reaching out. We will contact you within 24 hours.');
     }
 
@@ -39,4 +44,4 @@ class ContactController extends Controller
             'ebook' => config('ebook'),
         ]);
     }
-}
+}

@@ -18,9 +18,23 @@ class PageController extends Controller
         ]);
     }
 
+    public function portfolio()
+    {
+        return view('pages.portfolio', [
+            'ebook' => config('ebook'),
+        ]);
+    }
+
     public function blog()
     {
         return view('pages.blog', [
+            'ebook' => config('ebook'),
+        ]);
+    }
+
+    public function faq()
+    {
+        return view('pages.faq', [
             'ebook' => config('ebook'),
         ]);
     }
