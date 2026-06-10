@@ -130,9 +130,9 @@
                     <!-- Footer -->
                     <tr>
                         <td style="padding: 30px 40px; background-color: #f8fafc; border-top: 1px solid #e2e8f0; text-align: center;">
-                            <p style="font-size: 14px; color: #64748b; margin: 0 0 8px 0; font-weight: 500;">
-                                Pookybooks
-                            </p>
+                            <a href="{{ config('app.url') }}" style="display: inline-block; margin-bottom: 16px;">
+                                <img src="{{ $message->embed(public_path('images/logo/PNG 2.png')) }}" alt="Pookybooks Logo" style="height: 50px; width: auto; display: block; margin: 0 auto;">
+                            </a>
                             <p style="font-size: 13px; color: #94a3b8; margin: 0;">
                                 This is an automated email from your website's contact form.
                             </p>

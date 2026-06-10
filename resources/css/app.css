@@ -171,6 +171,18 @@
     background: #60a5fa;
   }
 
+  .logo-scrolled {
+    display: none;
+  }
+
+  .site-header.is-scrolled .logo-default {
+    display: none !important;
+  }
+
+  .site-header.is-scrolled .logo-scrolled {
+    display: block !important;
+  }
+
   /* ---- Desktop / Tablet Nav links (visible ≥ 768px) ---- */
   .desktop-nav {
     display: flex;

@@ -1,9 +1,13 @@
 <footer class="site-footer">
     <div class="container site-footer__grid">
         <section class="reveal" data-reveal>
-            <p class="section-kicker">About</p>
+            <a href="{{ route('home') }}" style="display: inline-block; margin-bottom: 1.5rem;">
+                <img src="{{ asset('images/logo/PNG 7.png') }}" alt="Pookybooks Logo"
+                    style="width: 230px; height: auto; object-fit: contain;">
+            </a>
             <h2>Done-for-you publishing that feels calm, clear, and professional.</h2>
-            <p>We help authors turn ideas into published books with a process that feels guided from the first call to the final launch.</p>
+            <p>We help authors turn ideas into published books with a process that feels guided from the first call to
+                the final launch.</p>
         </section>
 
         <section class="reveal" data-reveal>

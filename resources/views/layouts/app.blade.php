@@ -8,6 +8,7 @@
     <meta name="description" content="@yield('description', config('ebook.default_description'))">
     <meta name="keywords" content="@yield('keywords', config('ebook.default_keywords'))">
     <link rel="canonical" href="{{ url()->current() }}">
+    <link rel="icon" type="image/png" href="{{ asset('images/logo/PNG 5.png') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link

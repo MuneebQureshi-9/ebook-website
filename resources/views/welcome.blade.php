@@ -46,11 +46,7 @@
                 <div class="flex items-center gap-10">
                     <!-- Logo -->
                     <a href="#" class="flex items-center gap-2">
-                        <div class="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center shadow-sm">
-                            <div class="w-4 h-4 bg-white rounded-full opacity-30"></div>
-                            <div class="w-2 h-2 bg-white rounded-full absolute"></div>
-                        </div>
-                        <span class="font-bold text-xl tracking-tight">Untitled UI</span>
+                        <img src="{{ asset('images/logo/PNG 2.png') }}" alt="Pookybooks Logo" class="h-10 w-auto object-contain">
                     </a>
 
                     <!-- Desktop Nav Links -->

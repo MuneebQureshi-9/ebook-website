@@ -5,15 +5,9 @@
         <div class="nav-bar">
 
             {{-- Logo --}}
-            <a class="brand" href="{{ route('home') }}" style="display: flex; align-items: center; gap: 0.5rem; text-decoration: none;">
-                <div style="background: linear-gradient(135deg, #3b82f6, #8b5cf6); border-radius: 8px; padding: 6px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 6px rgba(59,130,246,0.3);">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/>
-                    </svg>
-                </div>
-                <span style="font-family: 'Poppins', sans-serif; font-size: 1.5rem; font-weight: 800; letter-spacing: -0.03em;">
-                    <span style="color: inherit;">Pooky</span><span style="color: #3b82f6;">books</span>
-                </span>
+            <a class="brand" href="{{ route('home') }}" style="display: flex; align-items: center; text-decoration: none;">
+                <img src="{{ asset('images/logo/PNG 2.png') }}" class="logo-default" alt="Pookybooks Logo" style="width: 210px; height: auto; object-fit: contain;">
+                <img src="{{ asset('images/logo/PNG 3.png') }}" class="logo-scrolled" alt="Pookybooks Logo" style="width: 210px; height: auto; object-fit: contain;">
             </a>
 
             {{-- Desktop + Tablet nav (visible ≥ 768px) --}}
