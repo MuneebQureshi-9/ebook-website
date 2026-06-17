@@ -45,7 +45,10 @@
                     document.addEventListener('DOMContentLoaded', function() {
                         Swal.fire({
                             title: 'Success!',
-                            text: '{{ session('success') }}',
+                            // Security Detail: Using json_encode with JSON_HEX flags converts the PHP variable to a safely escaped 
+                            // JSON string literal, preventing any possibility of Javascript Injection/Cross-Site Scripting (XSS) 
+                            // that could occur if an attacker tried to break out of a standard single-quoted template string.
+                            text: {!! json_encode(session('success'), JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) !!},
                             icon: 'success',
                             confirmButtonColor: 'var(--color-primary, #2563eb)',
                             confirmButtonText: 'Back to Home'
@@ -66,17 +69,17 @@
                     <label>
                         Full Name
                         <input type="text" name="full_name" value="{{ old('full_name') }}" placeholder="Enter your full name" required>
-                        @error('full_name')<span>{{ $message }}</span>@enderror
+                        @error('full_name')<span style="color: #ef4444; font-size: 0.825rem; display: block; margin-top: 0.35rem; font-weight: 500;">{{ $message }}</span>@enderror
                     </label>
                     <label>
                         Email Address
                         <input type="email" name="email" value="{{ old('email') }}" placeholder="you@example.com" required>
-                        @error('email')<span>{{ $message }}</span>@enderror
+                        @error('email')<span style="color: #ef4444; font-size: 0.825rem; display: block; margin-top: 0.35rem; font-weight: 500;">{{ $message }}</span>@enderror
                     </label>
                     <label>
                         Phone Number
                         <input type="text" name="phone" value="{{ old('phone') }}" placeholder="+1 (555) 000-0000" required>
-                        @error('phone')<span>{{ $message }}</span>@enderror
+                        @error('phone')<span style="color: #ef4444; font-size: 0.825rem; display: block; margin-top: 0.35rem; font-weight: 500;">{{ $message }}</span>@enderror
                     </label>
                     <label>
                         Service
@@ -90,7 +93,7 @@
                     <label class="form-grid__full">
                         Tell Us About Your Project
                         <textarea name="message" rows="5" placeholder="Share your book idea, goals, or any questions you have..." required>{{ old('message') }}</textarea>
-                        @error('message')<span>{{ $message }}</span>@enderror
+                        @error('message')<span style="color: #ef4444; font-size: 0.825rem; display: block; margin-top: 0.35rem; font-weight: 500;">{{ $message }}</span>@enderror
                     </label>
                 </div>
 

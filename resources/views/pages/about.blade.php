@@ -15,11 +15,11 @@
         <div class="section-heading reveal" data-reveal style="max-width: 100%; text-align: center; margin-bottom: 0;">
             <p class="section-kicker" style="margin: 0 auto 1.25rem; display: inline-flex;">About Our Company</p>
             <h1 style="font-size: clamp(2.4rem, 5.5vw, 4rem); line-height: 1.05; margin-bottom: 1.25rem; max-width: 820px; margin-left: auto; margin-right: auto;">
-                The genius minds that<br>
-                <span style="color: var(--color-primary);">make your ebooks visible</span> among noise.
+                The Genius Minds That Make Your Ebooks<br>
+                <span style="color: var(--color-primary);">Stand Out.</span>
             </h1>
             <p style="font-size: 1.125rem; color: var(--color-muted); line-height: 1.75; max-width: 580px; margin: 0 auto 2.5rem;">
-                At Pookybooks, we have only one reason: to ensure that your voice has enough visibility. This means you will get more sales, more clients, or more reach.
+                At Pookybooks, we have only one goal: To ensure that your target markets hear your voice.  You get more sales, more clients, and more reach.
             </p>
 
             {{-- Hero CTA Pair --}}
@@ -43,15 +43,12 @@
         {{-- Left: text --}}
         <div class="reveal" data-reveal>
             <p class="section-kicker" style="margin-bottom: 1rem;">Our Story</p>
-            <h2 style="margin-bottom: 1.25rem;">Most agencies publish your ebook and wait for luck. We rely on data and research.</h2>
+            <h2 style="margin-bottom: 1.25rem;">Most agencies publish your ebook and then hope to get lucky and see results</h2>
             <p style="margin-bottom: 1rem;">
-                We built this agency because we want you to have a publishing process that is as serious as the knowledge you are sharing. Most agencies publish your ebook and then wait for luck to bring results — but we rely on data and research-driven work to bring actual results for you.
+                But we are different because we use solid and verified data and research to bring you real results. We're as serious about getting your message out to people as you are about educating them on your ideas and concepts. You've got ideas or solutions which you want to communicate that can help certain people.
             </p>
             <p style="margin-bottom: 1rem;">
-                We get that you aren't just here to put a book into the world. You actually want to present it in front of the people who need it most and give them every reason to trust the author behind it.
-            </p>
-            <p>
-                That is what we have been doing for hundreds of authors across every niche. And that is the only thing we do. Here is why many others trust us:
+                We understand that and publish your books in your name to build trust between you and your readers. We have published books for hundreds of authors across every niche. And that is where our specialty and expertise lie. Here is why many others trust us:
             </p>
 
             {{-- Divider with trust marks --}}
@@ -114,7 +111,7 @@
     <div class="container" style="position: relative; z-index: 1;">
         <div class="section-heading reveal" data-reveal style="text-align: center; max-width: 100%;">
             <p class="section-kicker-light" style="margin: 0 auto 1rem;">By The Numbers</p>
-            <h2 style="color: #fff; margin-bottom: 0.5rem;">Hundreds of authors are now more visible,<br>more credible, and more in demand.</h2>
+            <h2 style="color: #fff; margin-bottom: 0.5rem;">Hundreds of Authors Are Now More Visible,<br>More Credible, and More in Demand</h2>
             <p style="color: rgba(255,255,255,0.55); max-width: 520px; margin: 0 auto;">
                 Each number below represents a real author whose book is actively being worked on for them.
             </p>
@@ -155,8 +152,8 @@
 <section class="section-block container">
     <div class="section-heading reveal" data-reveal>
         <p class="section-kicker">Our Values</p>
-        <h2>What makes us a highly sought-after<br>option for an author.</h2>
-        <p>Not that we are very good at what we do. But authors reach out to us because our services help bring them real leads. Some of our values that we are actually proud of:</p>
+        <h2>What Makes Us a Highly Sought-After Option for an Author?</h2>
+        <p>Hint: Authors reach out to us because our services help them bring them real leads. Here are  our core values:</p>
     </div>
 
     <div class="grid grid--three">
@@ -205,7 +202,7 @@
             </div>
             <div>
                 <h3 style="font-size: 1.25rem; margin: 0 0 0.6rem;">Your Voice, Intact</h3>
-                <p style="line-height: 1.75; margin: 0; color: var(--color-muted);">Your readers trust you. So we maintain your voice in the ebook.</p>
+                <p style="line-height: 1.75; margin: 0; color: var(--color-muted);">We communicate key messages and knowledge in your voice to gain and retain reader trust. We help you build a loyal readership as well.</p>
             </div>
         </article>
 
@@ -230,7 +227,7 @@
             </div>
             <div>
                 <h3 style="font-size: 1.25rem; margin: 0 0 0.6rem;">Results Beyond Launch</h3>
-                <p style="line-height: 1.75; margin: 0; color: var(--color-muted);">We don't stop at publishing. We help your ebook reach the audience.</p>
+                <p style="line-height: 1.75; margin: 0; color: var(--color-muted);">We don't stop at publishing. We market your ebook to the right audiences.</p>
             </div>
         </article>
 
@@ -245,8 +242,7 @@
     <div class="container">
         <div class="section-heading reveal" data-reveal style="text-align: center; max-width: 100%;">
             <p class="section-kicker" style="margin: 0 auto 1rem; display: inline-flex;">How We Work</p>
-            <h2 style="margin-bottom: 0.75rem;">Show your ebook to real people,<br>in just 5 simple steps.</h2>
-            <p style="max-width: 500px; margin: 0 auto;">A clear and structured workflow designed to make your publishing journey effortless.</p>
+            <h2 style="margin-bottom: 0.75rem;">We Launch Your Ebook in 5 Simple Steps</h2>
         </div>
 
         <div style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 1rem; margin-top: 3rem; position: relative;" class="process-grid">
@@ -259,11 +255,11 @@
             " class="process-connector" aria-hidden="true"></div>
 
             @foreach ([
-                ['01', 'Book a Free Strategy Call',    'Talk with us to share your ideas, objectives, and target markets.'],
+                ['01', 'Book a Free Strategy Call',    'Share your ideas, objectives, and target markets with us.'],
                 ['02', 'Custom Execution Plan',  'We provide you with a complete roadmap to incentivize your ebook.'],
-                ['03', 'Content Creation & Production',    'We produce an ebook as per your personality and tone.'],
-                ['04', 'Publishing',   'Your book goes live on multiple major platforms.'],
-                ['05', 'Marketing',      'Our experts get your visibility and sales from your ebook.'],
+                ['03', 'Content Creation & Production',    'We produce an ebook reflecting your personality and tone.'],
+                ['04', 'Publishing',   'We launch your book on multiple major platforms.'],
+                ['05', 'Marketing',      'Our experts get you visibility,  sales, and royalty checks.'],
             ] as $step)
             <article class="surface-card reveal" data-reveal style="
                 position: relative; z-index: 1;
@@ -292,7 +288,7 @@
 <section class="section-block container">
     <div class="section-heading reveal" data-reveal>
         <p class="section-kicker">The People Behind The Work</p>
-        <h2>Our dedicated yet<br>proven experts.</h2>
+        <h2>Our Dedicated Yet Proven Experts</h2>
         <p>Every author at Pookybooks gets a publishing strategist, a senior editor, and a creative lead to deliver quality work.</p>
     </div>
 
@@ -404,7 +400,7 @@
                 letter-spacing: -0.02em;
                 margin: 0 0 2rem;
             ">
-                I had the knowledge. I just had no idea how to get it in front of the right people. Tried a few times but failed miserably. But working with Pookybooks got my ebook 200+ leads in just the first week. Amazing work.
+                I had the knowledge. I just had no idea how to get it in front of the right people. Tried a few times but failed miserably. But working with Pookybooks gets my ebook 200+ leads in just the first week. Amazing work.
             </blockquote>
 
             <div style="display: flex; align-items: center; gap: 1rem; justify-content: center;">
@@ -452,11 +448,11 @@
                 <p class="section-kicker-light" style="margin-bottom: 1.5rem;">✦ &nbsp;Ready to begin?</p>
 
                 <h2 style="color: #ffffff; font-size: clamp(1.75rem, 4vw, 3rem); margin-bottom: 1.25rem; line-height: 1.1;">
-                    Your knowledge deserves an audience.<br>Let's make sure it gets one.
+                    Your Knowledge Deserves an Audience.<br>Let's Make Sure It Gets One.
                 </h2>
 
                 <p style="color: rgba(255,255,255,0.65); font-size: 1.05rem; line-height: 1.7; max-width: 520px; margin: 0 auto 2.5rem;">
-                    Book a free 30-minute strategy call. We will show you exactly how your expertise becomes a published book that builds your visibility, grows your audience, and brings the right people to you.
+                    Book a free 30-minute strategy call. We will show you exactly how your expertise will become a published book that builds visibility, grows your audience, and brings the right people to you.
                 </p>
 
                 <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center;">

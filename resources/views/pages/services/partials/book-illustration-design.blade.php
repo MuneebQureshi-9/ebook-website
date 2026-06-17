@@ -1,11 +1,48 @@
-<section class="section-block container hero-section">
-    <div class="section-heading reveal" data-reveal>
-        <p class="section-kicker">Book Illustration & Design</p>
-        <h1>Your Cover Is Your First Sale, Make It Count</h1>
-        <p class="hero-section__text" style="max-width: 800px;">Don't judge a book by its cover, but readers do; we help you by designing or illustrating covers that build to sell. Because weak illustration costs you sales, and a strong one builds trust and meets your revenue goals at first glance.</p>
-        <div class="hero-section__actions">
-            @include('components.cta-button', ['href' => route('contact', ['service' => 'book-illustration-design']), 'label' => 'Request A Quote'])
-            @include('components.cta-button', ['href' => route('contact', ['service' => 'book-illustration-design']), 'label' => 'See Our Work', 'variant' => 'secondary'])
+<section class="section-block" style="padding-top: 3.5rem; padding-bottom: 2.5rem; background: var(--color-bg); position: relative; overflow: hidden; margin-top: -76px; padding-top: calc(76px + 3.5rem) !important;">
+    <!-- Decorative Background Orbs -->
+    <div style="position: absolute; top: -10%; left: -10%; width: 40rem; height: 40rem; background: rgba(37,99,235,0.08); border-radius: 9999px; filter: blur(100px); pointer-events: none;"></div>
+    <div style="position: absolute; top: 30%; right: -5%; width: 30rem; height: 30rem; background: rgba(99,102,241,0.07); border-radius: 9999px; filter: blur(100px); pointer-events: none;"></div>
+
+    <div class="container" style="position: relative; z-index: 1;">
+        <div class="section-heading reveal" data-reveal style="max-width: 100%; text-align: center; margin-bottom: 0;">
+            <!-- Kicker Badge -->
+            <p class="section-kicker" style="margin: 0 auto 1.25rem; display: inline-flex;">Book Illustration & Design</p>
+            
+            <!-- Title -->
+            <h1 style="font-size: clamp(2.2rem, 5vw, 4rem); line-height: 1.08; margin-bottom: 1.25rem; max-width: 860px; margin-left: auto; margin-right: auto;">
+                Book Illustration & Design
+            </h1>
+            
+            <!-- Subtitle -->
+            <p style="font-size: 1.25rem; color: var(--color-primary); font-weight: 600; line-height: 1.4; max-width: 700px; margin: 0 auto 1rem;">
+                Engage Your Readers with Flawless Visuals
+            </p>
+            
+            <!-- Description -->
+            <p style="font-size: 1.1rem; color: var(--color-muted); line-height: 1.75; max-width: 720px; margin: 0 auto 2.5rem;">
+                Readers have opinions about your book before they see its title or description. Weak visuals communicate low quality. However, strong ones build immediate trust and drive sales before a single word is read. Our designs and illustrations bring in more conversions and leads
+            </p>
+            
+            <!-- CTA Buttons -->
+            <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; margin-bottom: 2.5rem;">
+                @include('components.cta-button', ['href' => route('contact', ['service' => 'book-illustration-design']), 'label' => 'Request a Quote'])
+                @include('components.cta-button', ['href' => route('contact', ['service' => 'book-illustration-design']), 'label' => 'See Our Work', 'variant' => 'secondary'])
+            </div>
+
+            <!-- Trust Highlights -->
+            @if(isset($service['benefits']) && count($service['benefits']) > 0)
+            <div style="display: flex; flex-wrap: wrap; gap: 2rem; justify-content: center; padding-top: 1.5rem; border-top: 1px solid rgba(15,23,42,0.06); max-width: 680px; margin: 0 auto;">
+                @foreach ($service['benefits'] as $highlight)
+                <div style="display: inline-flex; align-items: center; gap: 0.5rem; color: var(--color-muted); font-size: 0.875rem; font-weight: 600;">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="color: var(--color-primary); flex-shrink: 0;">
+                        <circle cx="8" cy="8" r="7.25" stroke="currentColor" stroke-width="1.5"/>
+                        <path d="M5 8L7 10L11 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    {{ $highlight }}
+                </div>
+                @endforeach
+            </div>
+            @endif
         </div>
     </div>
 </section>
@@ -17,23 +54,23 @@
     <div class="grid grid--three">
         <article class="surface-card reveal" data-reveal>
             <span class="step-number">01</span>
-            <p>Front, back, and spine cover design for print and digital</p>
+            <p>Front, back, and spine cover design for both print and digital formats.</p>
         </article>
         <article class="surface-card reveal" data-reveal>
             <span class="step-number">02</span>
-            <p>Interior illustrations for children's books and illustrated titles</p>
+            <p>Interior illustrations for children's books and comics.</p>
         </article>
         <article class="surface-card reveal" data-reveal>
             <span class="step-number">03</span>
-            <p>Chapter headers, icons, and branded visual elements</p>
+            <p>Chapter headers, icons, and branded visual elements.</p>
         </article>
         <article class="surface-card reveal" data-reveal>
             <span class="step-number">04</span>
-            <p>eBook cover formatting for Amazon and other platforms</p>
+            <p>eBook cover formatting sized for all major platforms.</p>
         </article>
         <article class="surface-card reveal" data-reveal>
             <span class="step-number">05</span>
-            <p>Custom typography and brand-aligned layouts</p>
+            <p>Custom typography and brand-aligned layouts.</p>
         </article>
     </div>
 </section>

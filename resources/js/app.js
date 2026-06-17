@@ -243,7 +243,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	if (header) {
 		const handleScroll = () => {
 			const isMobileMenuOpen = navPanel && navPanel.classList.contains('is-open');
-			if (isMobileMenuOpen) {
+			if (isMobileMenuOpen || window.innerWidth < 768) {
 				header.classList.add('is-scrolled');
 				return;
 			}

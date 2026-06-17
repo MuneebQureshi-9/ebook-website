@@ -1,39 +1,76 @@
-<section class="section-block container hero-section">
-    <div class="section-heading reveal" data-reveal>
-        <p class="section-kicker">E-book Formatting</p>
-        <h1>Ensure Flawless Design for Easy Comprehension</h1>
-        <p class="hero-section__text" style="max-width: 800px;">A great book can be ruined by poor formatting. Whether your readers are on a Kindle, iPad, or flipping through a physical paperback, the layout must be intuitive and visually pleasing. We provide professional formatting that guarantees an optimal reading experience, so your audience stays immersed in your message instead of being distracted by broken layouts.</p>
-        <div class="hero-section__actions">
-            @include('components.cta-button', ['href' => route('contact', ['service' => 'book-formatting']), 'label' => 'Request a Quote'])
-            @include('components.cta-button', ['href' => route('contact', ['service' => 'book-formatting']), 'label' => 'See Formatting Samples', 'variant' => 'secondary'])
+<section class="section-block" style="padding-top: 3.5rem; padding-bottom: 2.5rem; background: var(--color-bg); position: relative; overflow: hidden; margin-top: -76px; padding-top: calc(76px + 3.5rem) !important;">
+    <!-- Decorative Background Orbs -->
+    <div style="position: absolute; top: -10%; left: -10%; width: 40rem; height: 40rem; background: rgba(37,99,235,0.08); border-radius: 9999px; filter: blur(100px); pointer-events: none;"></div>
+    <div style="position: absolute; top: 30%; right: -5%; width: 30rem; height: 30rem; background: rgba(99,102,241,0.07); border-radius: 9999px; filter: blur(100px); pointer-events: none;"></div>
+
+    <div class="container" style="position: relative; z-index: 1;">
+        <div class="section-heading reveal" data-reveal style="max-width: 100%; text-align: center; margin-bottom: 0;">
+            <!-- Kicker Badge -->
+            <p class="section-kicker" style="margin: 0 auto 1.25rem; display: inline-flex;">E-book Formatting</p>
+            
+            <!-- Title -->
+            <h1 style="font-size: clamp(2.2rem, 5vw, 4rem); line-height: 1.08; margin-bottom: 1.25rem; max-width: 860px; margin-left: auto; margin-right: auto;">
+                E-book Formatting
+            </h1>
+            
+            <!-- Subtitle -->
+            <p style="font-size: 1.25rem; color: var(--color-primary); font-weight: 600; line-height: 1.4; max-width: 700px; margin: 0 auto 1rem;">
+                Our Formatting Services Professionalize Your eBook
+            </p>
+            
+            <!-- Description -->
+            <p style="font-size: 1.1rem; color: var(--color-muted); line-height: 1.75; max-width: 720px; margin: 0 auto 2.5rem;">
+                Readers hate broken layouts, inconsistent fonts, and images.. But we make them fall in love with your books. Our formatting services bring your ebooks clarity, precision, and optimization.
+            </p>
+            
+            <!-- CTA Buttons -->
+            <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; margin-bottom: 2.5rem;">
+                @include('components.cta-button', ['href' => route('contact', ['service' => 'book-formatting']), 'label' => 'Request a Quote'])
+                @include('components.cta-button', ['href' => route('contact', ['service' => 'book-formatting']), 'label' => 'See Formatting Samples', 'variant' => 'secondary'])
+            </div>
+
+            <!-- Trust Highlights -->
+            @if(isset($service['benefits']) && count($service['benefits']) > 0)
+            <div style="display: flex; flex-wrap: wrap; gap: 2rem; justify-content: center; padding-top: 1.5rem; border-top: 1px solid rgba(15,23,42,0.06); max-width: 680px; margin: 0 auto;">
+                @foreach ($service['benefits'] as $highlight)
+                <div style="display: inline-flex; align-items: center; gap: 0.5rem; color: var(--color-muted); font-size: 0.875rem; font-weight: 600;">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="color: var(--color-primary); flex-shrink: 0;">
+                        <circle cx="8" cy="8" r="7.25" stroke="currentColor" stroke-width="1.5"/>
+                        <path d="M5 8L7 10L11 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    {{ $highlight }}
+                </div>
+                @endforeach
+            </div>
+            @endif
         </div>
     </div>
 </section>
 
 <section class="section-block container">
     <div class="section-heading reveal" data-reveal style="margin-bottom: 3rem;">
-        <h2>WHAT YOU GET:</h2>
+        <h2>WHAT YOU GET WITH OUR FORMATTING SERVICES:</h2>
     </div>
     <div class="grid grid--three">
         <article class="surface-card reveal" data-reveal>
             <span class="step-number">01</span>
-            <p>Custom layout design for digital and print formats</p>
+            <p>Custom layout design built separately for digital reading and print</p>
         </article>
         <article class="surface-card reveal" data-reveal>
             <span class="step-number">02</span>
-            <p>Typography selection optimized for readability</p>
+            <p>Typography chosen for maximum readability</p>
         </article>
         <article class="surface-card reveal" data-reveal>
             <span class="step-number">03</span>
-            <p>Precise image and chart placement</p>
+            <p>Precisely placed images, charts, and diagrams placed with precision</p>
         </article>
         <article class="surface-card reveal" data-reveal>
             <span class="step-number">04</span>
-            <p>Dynamic Table of Contents (TOC) creation</p>
+            <p>A dynamic, clickable Table of Contents</p>
         </article>
         <article class="surface-card reveal" data-reveal>
             <span class="step-number">05</span>
-            <p>Strict cross-device and platform compliance testing</p>
+            <p>Full compatibility testing across Kindle, Apple Books, Kobo and hard print</p>
         </article>
     </div>
 </section>

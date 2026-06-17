@@ -17,7 +17,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="site-shell">
+<body class="site-shell overflow-x-hidden">
     @include('components.navbar')
 
     <main id="main-content">

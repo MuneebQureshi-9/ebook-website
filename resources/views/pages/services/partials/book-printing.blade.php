@@ -1,43 +1,80 @@
-<section class="section-block container hero-section">
-    <div class="section-heading reveal" data-reveal>
-        <p class="section-kicker">Book Printing</p>
-        <h1>Expand Your Reach Beyond Books</h1>
-        <p class="hero-section__text" style="max-width: 800px;">You need a book for yourself, for events, or for public speaking, and you want it to be available in every store. We help you with our professional printing production from start to finish because you are our first priority, your audience is yours, and good printing helps you build trust with your audience.</p>
-        <div class="hero-section__actions">
-            @include('components.cta-button', ['href' => route('contact', ['service' => 'book-printing']), 'label' => 'Request A Quote'])
-            @include('components.cta-button', ['href' => route('contact', ['service' => 'book-printing']), 'label' => 'Get A Free Consultation', 'variant' => 'secondary'])
+<section class="section-block" style="padding-top: 3.5rem; padding-bottom: 2.5rem; background: var(--color-bg); position: relative; overflow: hidden; margin-top: -76px; padding-top: calc(76px + 3.5rem) !important;">
+    <!-- Decorative Background Orbs -->
+    <div style="position: absolute; top: -10%; left: -10%; width: 40rem; height: 40rem; background: rgba(37,99,235,0.08); border-radius: 9999px; filter: blur(100px); pointer-events: none;"></div>
+    <div style="position: absolute; top: 30%; right: -5%; width: 30rem; height: 30rem; background: rgba(99,102,241,0.07); border-radius: 9999px; filter: blur(100px); pointer-events: none;"></div>
+
+    <div class="container" style="position: relative; z-index: 1;">
+        <div class="section-heading reveal" data-reveal style="max-width: 100%; text-align: center; margin-bottom: 0;">
+            <!-- Kicker Badge -->
+            <p class="section-kicker" style="margin: 0 auto 1.25rem; display: inline-flex;">Book Printing</p>
+            
+            <!-- Title -->
+            <h1 style="font-size: clamp(2.2rem, 5vw, 4rem); line-height: 1.08; margin-bottom: 1.25rem; max-width: 860px; margin-left: auto; margin-right: auto;">
+                Book Printing
+            </h1>
+            
+            <!-- Subtitle -->
+            <p style="font-size: 1.25rem; color: var(--color-primary); font-weight: 600; line-height: 1.4; max-width: 700px; margin: 0 auto 1rem;">
+                Printing that Improves Your Book’s Look
+            </p>
+            
+            <!-- Description -->
+            <p style="font-size: 1.1rem; color: var(--color-muted); line-height: 1.75; max-width: 720px; margin: 0 auto 2.5rem;">
+                A printed book signals credibility in ways that a PDF never can. We print books in hard and soft copies so you never miss a chance to reach your target audience. Our team manages the entire print production, including quality control, formatting, and on-time delivery.
+            </p>
+            
+            <!-- CTA Buttons -->
+            <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; margin-bottom: 2.5rem;">
+                @include('components.cta-button', ['href' => route('contact', ['service' => 'book-printing']), 'label' => 'Request A Quote'])
+                @include('components.cta-button', ['href' => route('contact', ['service' => 'book-printing']), 'label' => 'Get A Free Consultation', 'variant' => 'secondary'])
+            </div>
+
+            <!-- Trust Highlights -->
+            @if(isset($service['benefits']) && count($service['benefits']) > 0)
+            <div style="display: flex; flex-wrap: wrap; gap: 2rem; justify-content: center; padding-top: 1.5rem; border-top: 1px solid rgba(15,23,42,0.06); max-width: 680px; margin: 0 auto;">
+                @foreach ($service['benefits'] as $highlight)
+                <div style="display: inline-flex; align-items: center; gap: 0.5rem; color: var(--color-muted); font-size: 0.875rem; font-weight: 600;">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="color: var(--color-primary); flex-shrink: 0;">
+                        <circle cx="8" cy="8" r="7.25" stroke="currentColor" stroke-width="1.5"/>
+                        <path d="M5 8L7 10L11 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    {{ $highlight }}
+                </div>
+                @endforeach
+            </div>
+            @endif
         </div>
     </div>
 </section>
 
 <section class="section-block container">
     <div class="section-heading reveal" data-reveal style="margin-bottom: 3rem;">
-        <h2>SERVICES INCLUDE:</h2>
+        <h2>OUR BOOK PRINTING SERVICES INCLUDE:</h2>
     </div>
     <div class="grid grid--three">
         <article class="surface-card reveal" data-reveal>
             <span class="step-number">01</span>
-            <p>Print-on-demand setup for zero upfront inventory risk</p>
+            <p>Print-on-demand setup, letting you carry zero inventory risk</p>
         </article>
         <article class="surface-card reveal" data-reveal>
             <span class="step-number">02</span>
-            <p>Bulk printing for book launches, events, and direct sales</p>
+            <p>Bulk print with end-to-end book launches and sales</p>
         </article>
         <article class="surface-card reveal" data-reveal>
             <span class="step-number">03</span>
-            <p>Professional interior and cover formatting for print</p>
+            <p>Interior layout and cover formatting</p>
         </article>
         <article class="surface-card reveal" data-reveal>
             <span class="step-number">04</span>
-            <p>Paperback and hardcover options</p>
+            <p>Paperback and hardcover binding options</p>
         </article>
         <article class="surface-card reveal" data-reveal>
             <span class="step-number">05</span>
-            <p>ISBN and barcode setup for retail distribution</p>
+            <p>ISBN registration and barcode generation</p>
         </article>
         <article class="surface-card reveal" data-reveal>
             <span class="step-number">06</span>
-            <p>Quality-controlled proofing before your final print run</p>
+            <p>Proofing and quality checks before the final print run</p>
         </article>
     </div>
 </section>

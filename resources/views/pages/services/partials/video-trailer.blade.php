@@ -1,18 +1,55 @@
-<section class="section-block container hero-section">
-    <div class="section-heading reveal" data-reveal>
-        <p class="section-kicker">Video Trailer</p>
-        <h1>Cinematic Trailers for Your Social Feeds</h1>
-        <p class="hero-section__text" style="max-width: 800px;">In today's digital landscape, video is the most engaging form of content. A captivating book trailer can convey the mood, tension, and excitement of your story in seconds. We produce high-quality promotional video trailers tailored for social media platforms like Instagram, TikTok, and YouTube, driving traffic directly to your sales pages.</p>
-        <div class="hero-section__actions">
-            @include('components.cta-button', ['href' => route('contact', ['service' => 'video-trailer']), 'label' => 'Request a Quote'])
-            @include('components.cta-button', ['href' => route('contact', ['service' => 'video-trailer']), 'label' => 'Watch Sample Trailers', 'variant' => 'secondary'])
+<section class="section-block" style="padding-top: 3.5rem; padding-bottom: 2.5rem; background: var(--color-bg); position: relative; overflow: hidden; margin-top: -76px; padding-top: calc(76px + 3.5rem) !important;">
+    <!-- Decorative Background Orbs -->
+    <div style="position: absolute; top: -10%; left: -10%; width: 40rem; height: 40rem; background: rgba(37,99,235,0.08); border-radius: 9999px; filter: blur(100px); pointer-events: none;"></div>
+    <div style="position: absolute; top: 30%; right: -5%; width: 30rem; height: 30rem; background: rgba(99,102,241,0.07); border-radius: 9999px; filter: blur(100px); pointer-events: none;"></div>
+
+    <div class="container" style="position: relative; z-index: 1;">
+        <div class="section-heading reveal" data-reveal style="max-width: 100%; text-align: center; margin-bottom: 0;">
+            <!-- Kicker Badge -->
+            <p class="section-kicker" style="margin: 0 auto 1.25rem; display: inline-flex;">Video Trailer</p>
+            
+            <!-- Title -->
+            <h1 style="font-size: clamp(2.2rem, 5vw, 4rem); line-height: 1.08; margin-bottom: 1.25rem; max-width: 860px; margin-left: auto; margin-right: auto;">
+                Video Trailer
+            </h1>
+            
+            <!-- Subtitle -->
+            <p style="font-size: 1.25rem; color: var(--color-primary); font-weight: 600; line-height: 1.4; max-width: 700px; margin: 0 auto 1rem;">
+                Short Cinematic Videos That Make Your Readers Crave Your Book
+            </p>
+            
+            <!-- Description -->
+            <p style="font-size: 1.1rem; color: var(--color-muted); line-height: 1.75; max-width: 720px; margin: 0 auto 2.5rem;">
+                It’s almost impossible to earn attention online, but we have cracked the code for our authors. Our experts help us create an exceptional trailer for your book that piques potential readers’ imaginations and makes them eager to read your book. Our trailers are great for Instagram, TikTok, and YouTube if you want to drive real traffic to your sales pages.
+            </p>
+            
+            <!-- CTA Buttons -->
+            <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; margin-bottom: 2.5rem;">
+                @include('components.cta-button', ['href' => route('contact', ['service' => 'video-trailer']), 'label' => 'Request a Quote'])
+                @include('components.cta-button', ['href' => route('contact', ['service' => 'video-trailer']), 'label' => 'Watch Sample Trailers', 'variant' => 'secondary'])
+            </div>
+
+            <!-- Trust Highlights -->
+            @if(isset($service['benefits']) && count($service['benefits']) > 0)
+            <div style="display: flex; flex-wrap: wrap; gap: 2rem; justify-content: center; padding-top: 1.5rem; border-top: 1px solid rgba(15,23,42,0.06); max-width: 680px; margin: 0 auto;">
+                @foreach ($service['benefits'] as $highlight)
+                <div style="display: inline-flex; align-items: center; gap: 0.5rem; color: var(--color-muted); font-size: 0.875rem; font-weight: 600;">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="color: var(--color-primary); flex-shrink: 0;">
+                        <circle cx="8" cy="8" r="7.25" stroke="currentColor" stroke-width="1.5"/>
+                        <path d="M5 8L7 10L11 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    {{ $highlight }}
+                </div>
+                @endforeach
+            </div>
+            @endif
         </div>
     </div>
 </section>
 
 <section class="section-block container">
     <div class="section-heading reveal" data-reveal style="margin-bottom: 3rem;">
-        <h2>WHAT'S INCLUDED:</h2>
+        <h2>WHAT'S INCLUDED IN OUR VIDEO TRAILER SERVICES</h2>
     </div>
     <div class="grid grid--three">
         <article class="surface-card reveal" data-reveal>
@@ -25,7 +62,7 @@
         </article>
         <article class="surface-card reveal" data-reveal>
             <span class="step-number">03</span>
-            <p>Professional voiceover integration</p>
+            <p>Professional voiceover integration to match your tone</p>
         </article>
         <article class="surface-card reveal" data-reveal>
             <span class="step-number">04</span>
@@ -33,7 +70,7 @@
         </article>
         <article class="surface-card reveal" data-reveal>
             <span class="step-number">05</span>
-            <p>Optimized formatting for vertical and horizontal social feeds</p>
+            <p>Optimised formatting for both vertical and horizontal social feeds</p>
         </article>
     </div>
 </section>
@@ -45,9 +82,9 @@
             <div style="position: absolute; top: -6rem; right: -6rem; width: 24rem; height: 24rem; border-radius: 9999px; background: rgba(96,165,250,0.12); filter: blur(60px); pointer-events: none;" aria-hidden="true"></div>
             <div style="position: absolute; bottom: -6rem; left: -4rem; width: 20rem; height: 20rem; border-radius: 9999px; background: rgba(20,184,166,0.12); filter: blur(60px); pointer-events: none;" aria-hidden="true"></div>
             <div style="position: relative; z-index: 1; max-width: 680px; margin: 0 auto; text-align: center;">
-                <p class="section-kicker-light" style="margin-bottom: 1.5rem;">✦ &nbsp;Ready to begin?</p>
-                <h2 style="color: #ffffff; font-size: clamp(1.75rem, 4vw, 3rem); margin-bottom: 1.25rem; line-height: 1.1;">Your book is waiting to be written.<br>Let's make it happen.</h2>
-                <p style="color: rgba(255,255,255,0.65); font-size: 1.05rem; line-height: 1.7; max-width: 520px; margin: 0 auto 2.5rem;">Book a free 30-minute strategy call and we'll map out exactly how to take your idea from concept to bestseller.</p>
+                <p class="section-kicker-light" style="margin-bottom: 1.5rem;">✦ &nbsp;READY TO BEGIN?</p>
+                <h2 style="color: #ffffff; font-size: clamp(1.75rem, 4vw, 3rem); margin-bottom: 1.25rem; line-height: 1.1;">Let’s Convert Your Ebook to an Amazing Video Trailer</h2>
+                <p style="color: rgba(255,255,255,0.65); font-size: 1.05rem; line-height: 1.7; max-width: 520px; margin: 0 auto 2.5rem;">Book a free 30-minute strategy call to get a personalized map for video trailer production.</p>
                 <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center;">
                     <a href="{{ route('contact') }}" class="action-button" style="background: #ffffff; color: #1e3a8a; box-shadow: 0 14px 30px rgba(15,23,42,0.25); font-weight: 800;" onmouseenter="this.style.background='rgba(255,255,255,0.9)'; this.style.transform='translateY(-2px)'" onmouseleave="this.style.background='#ffffff'; this.style.transform='translateY(0)'">Book a Free Strategy Call</a>
                     <a href="{{ route('services.index') }}" class="action-button" style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.22); color: rgba(255,255,255,0.9); font-weight: 700;" onmouseenter="this.style.background='rgba(255,255,255,0.14)'; this.style.transform='translateY(-2px)'" onmouseleave="this.style.background='rgba(255,255,255,0.08)'; this.style.transform='translateY(0)'">Explore Our Services</a>

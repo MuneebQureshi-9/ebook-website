@@ -1,12 +1,12 @@
 @props([
-    'kicker' => 'Publishing made clear',
+    'kicker' => 'The Ultimate E-Book Agency',
     'desktopImage' => '/images/hero/Desktop Hero.webp',
     'mobileImage' => '/images/hero/Mobile Hero.webp',
     'supportImage' => '/images/author/portrait author.webp',
     'image_only' => false,
 ])
 
-<section class="hero-section relative bg-slate-50/50 {{ $image_only ? 'hero-section--image-only' : '' }}">
+<section class="hero-section overflow-hidden relative bg-slate-50/50 {{ $image_only ? 'hero-section--image-only' : '' }}">
     <!-- Decorative Glowing Background Orbs -->
     <div class="absolute top-[-10%] left-[-10%] w-[40rem] h-[40rem] bg-blue-400/20 rounded-full mix-blend-multiply filter blur-[100px] opacity-70 pointer-events-none"></div>
     <div class="absolute top-[30%] right-[0%] w-[35rem] h-[35rem] bg-indigo-400/20 rounded-full mix-blend-multiply filter blur-[100px] opacity-70 pointer-events-none"></div>

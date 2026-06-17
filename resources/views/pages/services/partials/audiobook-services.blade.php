@@ -1,12 +1,46 @@
-<section class="section-block container hero-section">
-    <div class="section-heading reveal" data-reveal>
-        <p class="section-kicker">Audiobook Services</p>
-        <h1>Audiobook Services</h1>
-        <h2 style="font-size: clamp(1.8rem, 3.5vw, 2.6rem); margin-top: 0.5rem;">Reach the Audience That Prefers to Listen</h2>
-        <p class="hero-section__text" style="max-width: 800px;">Millions of readers never open an ebook because they listen. In fact, the audiobook market is one of the fastest-growing formats in publishing, and your book belongs in it. We produce distribution-ready audiobooks for Spotify, Audible, and Apple Books that sound as authoritative as your content is.</p>
-        <div class="hero-section__actions">
-            @include('components.cta-button', ['href' => route('contact', ['service' => 'audiobook-services']), 'label' => 'Create My Audiobook'])
-            @include('components.cta-button', ['href' => route('contact', ['service' => 'audiobook-services']), 'label' => 'Expand My Audience', 'variant' => 'secondary'])
+<section class="section-block" style="padding-top: 3.5rem; padding-bottom: 2.5rem; background: var(--color-bg); position: relative; overflow: hidden; margin-top: -76px; padding-top: calc(76px + 3.5rem) !important;">
+    <!-- Decorative Background Orbs -->
+    <div style="position: absolute; top: -10%; left: -10%; width: 40rem; height: 40rem; background: rgba(37,99,235,0.08); border-radius: 9999px; filter: blur(100px); pointer-events: none;"></div>
+    <div style="position: absolute; top: 30%; right: -5%; width: 30rem; height: 30rem; background: rgba(99,102,241,0.07); border-radius: 9999px; filter: blur(100px); pointer-events: none;"></div>
+
+    <div class="container" style="position: relative; z-index: 1;">
+        <div class="section-heading reveal" data-reveal style="max-width: 100%; text-align: center; margin-bottom: 0;">
+            <!-- Kicker Badge -->
+            <p class="section-kicker" style="margin: 0 auto 1.25rem; display: inline-flex;">Audiobook Services</p>
+            
+            <!-- Title -->
+            <h1 style="font-size: clamp(2.2rem, 5vw, 4rem); line-height: 1.08; margin-bottom: 1.25rem; max-width: 860px; margin-left: auto; margin-right: auto;">
+                Audiobook Services
+            </h1>
+            
+            <!-- Subtitle -->
+            <p style="font-size: 1.25rem; color: var(--color-primary); font-weight: 600; line-height: 1.4; max-width: 700px; margin: 0 auto 1rem;">
+                Reach the Audience That Prefers to Listen
+            </p>
+            
+            <!-- Description -->
+            <p style="font-size: 1.1rem; color: var(--color-muted); line-height: 1.75; max-width: 720px; margin: 0 auto 2.5rem;">
+                Millions of readers listen to audiobooks instead of reading an ebook. The audiobook market is one of the fastest-growing formats in publishing, and your book belongs in it. We produce distribution-ready audiobooks for Spotify, Audible, and Apple Books that sound as authoritative as your content is.
+            </p>
+            
+            <!-- CTA Buttons -->
+            <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; margin-bottom: 2.5rem;">
+                @include('components.cta-button', ['href' => route('contact', ['service' => 'audiobook-services']), 'label' => 'Create My Audiobook'])
+                @include('components.cta-button', ['href' => route('contact', ['service' => 'audiobook-services']), 'label' => 'Expand My Audience', 'variant' => 'secondary'])
+            </div>
+
+            <!-- Trust Highlights -->
+            <div style="display: flex; flex-wrap: wrap; gap: 2rem; justify-content: center; padding-top: 1.5rem; border-top: 1px solid rgba(15,23,42,0.06); max-width: 680px; margin: 0 auto;">
+                @foreach (['Audible & ACX Compliant', 'Native Voice Narration', 'Distribution Ready'] as $highlight)
+                <div style="display: inline-flex; align-items: center; gap: 0.5rem; color: var(--color-muted); font-size: 0.875rem; font-weight: 600;">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="color: var(--color-primary); flex-shrink: 0;">
+                        <circle cx="8" cy="8" r="7.25" stroke="currentColor" stroke-width="1.5"/>
+                        <path d="M5 8L7 10L11 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    {{ $highlight }}
+                </div>
+                @endforeach
+            </div>
         </div>
     </div>
 </section>

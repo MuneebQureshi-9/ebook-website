@@ -1,40 +1,78 @@
-<section class="section-block container hero-section">
-    <div class="section-heading reveal" data-reveal>
-        <p class="section-kicker">Podcast Services</p>
-        <h1>Expand Your Reach Beyond Books</h1>
-        <p class="hero-section__text" style="max-width: 800px; margin-bottom: 1.5rem;">As an author, to keep engaging your audience long after the last page or to build a loyal community of listeners, podcasting is best suited to expand your reach and grow your audience.</p>
-        <p class="hero-section__text" style="max-width: 800px; margin-bottom: 1.5rem;">We are doing heavy lifting for you from production to launch each episode, so you can focus on building a loyal audience.</p>
-        <div class="hero-section__actions">
-            @include('components.cta-button', ['href' => route('contact', ['service' => 'podcast-services']), 'label' => 'Launch My Podcast'])
-            @include('components.cta-button', ['href' => route('contact', ['service' => 'podcast-services']), 'label' => 'Request a quote', 'variant' => 'secondary'])
+<section class="section-block" style="padding-top: 3.5rem; padding-bottom: 2.5rem; background: var(--color-bg); position: relative; overflow: hidden; margin-top: -76px; padding-top: calc(76px + 3.5rem) !important;">
+    <!-- Decorative Background Orbs -->
+    <div style="position: absolute; top: -10%; left: -10%; width: 40rem; height: 40rem; background: rgba(37,99,235,0.08); border-radius: 9999px; filter: blur(100px); pointer-events: none;"></div>
+    <div style="position: absolute; top: 30%; right: -5%; width: 30rem; height: 30rem; background: rgba(99,102,241,0.07); border-radius: 9999px; filter: blur(100px); pointer-events: none;"></div>
+
+    <div class="container" style="position: relative; z-index: 1;">
+        <div class="section-heading reveal" data-reveal style="max-width: 100%; text-align: center; margin-bottom: 0;">
+            <!-- Kicker Badge -->
+            <p class="section-kicker" style="margin: 0 auto 1.25rem; display: inline-flex;">Podcast Services</p>
+            
+            <!-- Title -->
+            <h1 style="font-size: clamp(2.2rem, 5vw, 4rem); line-height: 1.08; margin-bottom: 1.25rem; max-width: 860px; margin-left: auto; margin-right: auto;">
+                Podcast Services
+            </h1>
+            
+            <!-- Subtitle -->
+            <p style="font-size: 1.25rem; color: var(--color-primary); font-weight: 600; line-height: 1.4; max-width: 700px; margin: 0 auto 1rem;">
+                We Hook Audiences by Turning Your Book into a Podcast
+            </p>
+            
+            <!-- Description -->
+            <div style="font-size: 1.1rem; color: var(--color-muted); line-height: 1.75; max-width: 720px; margin: 0 auto 2.5rem;">
+                <p style="margin-bottom: 1rem;">Want your readers to hunger for even more of your content after finishing your book? Whet their appetites with a podcast!</p>
+                <p style="margin-bottom: 1rem;">A podcast is your voice, your ideas, your expertise available 24/7! Podcasts convert readers into loyal audiences who are eager to buy your next book at a moment’s notice.</p>
+                <p style="margin: 0;">Just show up and talk about your ideas. We take care of the rest: from concept, production, editing, and distribution for every episode.</p>
+            </div>
+            
+            <!-- CTA Buttons -->
+            <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; margin-bottom: 2.5rem;">
+                @include('components.cta-button', ['href' => route('contact', ['service' => 'podcast-services']), 'label' => 'Launch My Podcast'])
+                @include('components.cta-button', ['href' => route('contact', ['service' => 'podcast-services']), 'label' => 'Request a Quote', 'variant' => 'secondary'])
+            </div>
+
+            <!-- Trust Highlights -->
+            @if(isset($service['benefits']) && count($service['benefits']) > 0)
+            <div style="display: flex; flex-wrap: wrap; gap: 2rem; justify-content: center; padding-top: 1.5rem; border-top: 1px solid rgba(15,23,42,0.06); max-width: 680px; margin: 0 auto;">
+                @foreach ($service['benefits'] as $highlight)
+                <div style="display: inline-flex; align-items: center; gap: 0.5rem; color: var(--color-muted); font-size: 0.875rem; font-weight: 600;">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="color: var(--color-primary); flex-shrink: 0;">
+                        <circle cx="8" cy="8" r="7.25" stroke="currentColor" stroke-width="1.5"/>
+                        <path d="M5 8L7 10L11 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    {{ $highlight }}
+                </div>
+                @endforeach
+            </div>
+            @endif
         </div>
     </div>
 </section>
 
 <section class="section-block container">
     <div class="section-heading reveal" data-reveal style="margin-bottom: 3rem;">
-        <h2>SERVICES INCLUDE:</h2>
+        <h2>OUR PODCAST SERVICES INCLUDE:</h2>
     </div>
     <div class="grid grid--three">
         <article class="surface-card reveal" data-reveal>
             <span class="step-number">01</span>
-            <p>Full podcast concept development and show setup</p>
+            <p>Full podcast concept development</p>
         </article>
         <article class="surface-card reveal" data-reveal>
             <span class="step-number">02</span>
-            <p>Episode structuring and content planning</p>
+            <p>Episode planning and content mapping</p>
         </article>
         <article class="surface-card reveal" data-reveal>
             <span class="step-number">03</span>
-            <p>Professional audio editing and mastering</p>
+            <p>Professional audio editing, noise removal, and mastering</p>
         </article>
         <article class="surface-card reveal" data-reveal>
             <span class="step-number">04</span>
-            <p>Intro and outro music production</p>
+            <p>Custom intro and outro music produced to match your brand</p>
         </article>
         <article class="surface-card reveal" data-reveal>
             <span class="step-number">05</span>
-            <p>Publishing and distribution on Spotify, Apple, and more</p>
+            <p>Publishing and distribution to major platforms</p>
         </article>
     </div>
 </section>

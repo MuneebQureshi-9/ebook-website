@@ -1,22 +1,62 @@
-<section class="section-block container hero-section">
-    <div class="section-heading reveal" data-reveal>
-        <p class="section-kicker">Book Marketing</p>
-        <h1>We Get Your Brilliant Ebooks in Front of the Right People</h1>
-        <p class="hero-section__text" style="max-width: 800px; margin-bottom: 2rem;">If you self-publish an ebook, it probably won't sell, even if it has brilliant and innovative ideas, inspiration, and is well-written. You aren't a bad author lacking the potential to make it big. It's just that the net is saturated with so many ebooks on similar topics and sharing similar concepts that your potential readers are overwhelmed with choices.</p>
-        <div class="hero-section__actions">
-            @include('components.cta-button', ['href' => route('contact', ['service' => 'book-marketing']), 'label' => 'Increase My Book Sales'])
-            @include('components.cta-button', ['href' => route('contact', ['service' => 'book-marketing']), 'label' => 'Get a Marketing Strategy', 'variant' => 'secondary'])
+<section class="section-block" style="padding-top: 3.5rem; padding-bottom: 2.5rem; background: var(--color-bg); position: relative; overflow: hidden; margin-top: -76px; padding-top: calc(76px + 3.5rem) !important;">
+    <!-- Decorative Background Orbs -->
+    <div style="position: absolute; top: -10%; left: -10%; width: 40rem; height: 40rem; background: rgba(37,99,235,0.08); border-radius: 9999px; filter: blur(100px); pointer-events: none;"></div>
+    <div style="position: absolute; top: 30%; right: -5%; width: 30rem; height: 30rem; background: rgba(99,102,241,0.07); border-radius: 9999px; filter: blur(100px); pointer-events: none;"></div>
+
+    <div class="container" style="position: relative; z-index: 1;">
+        <div class="section-heading reveal" data-reveal style="max-width: 100%; text-align: center; margin-bottom: 0;">
+            <!-- Kicker Badge -->
+            <p class="section-kicker" style="margin: 0 auto 1.25rem; display: inline-flex;">Book Marketing</p>
+            
+            <!-- Title -->
+            <h1 style="font-size: clamp(2.2rem, 5vw, 4rem); line-height: 1.08; margin-bottom: 1.25rem; max-width: 860px; margin-left: auto; margin-right: auto;">
+                Book Marketing
+            </h1>
+            
+            <!-- Subtitle -->
+            <p style="font-size: 1.25rem; color: var(--color-primary); font-weight: 600; line-height: 1.4; max-width: 700px; margin: 0 auto 1rem;">
+                Get More Sales with Our Superior Book Marketing Services
+            </p>
+            
+            <!-- Description -->
+            <p style="font-size: 1.1rem; color: var(--color-muted); line-height: 1.75; max-width: 720px; margin: 0 auto 2.5rem;">
+                Most authors’ books don’t sell because they don’t have access to proper marketing services. However, our organic plus outreach and content marketing get you customers right away. Our USP is in targeted marketing around your genre, your audience, and your goals.
+            </p>
+            
+            <!-- CTA Buttons -->
+            <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; margin-bottom: 2.5rem;">
+                @include('components.cta-button', ['href' => route('contact', ['service' => 'book-marketing']), 'label' => 'Grow My Book Sales'])
+                @include('components.cta-button', ['href' => route('contact', ['service' => 'book-marketing']), 'label' => 'Get a Marketing Strategy', 'variant' => 'secondary'])
+            </div>
+
+            <!-- Trust Highlights -->
+            @if(isset($service['benefits']) && count($service['benefits']) > 0)
+            <div style="display: flex; flex-wrap: wrap; gap: 2rem; justify-content: center; padding-top: 1.5rem; border-top: 1px solid rgba(15,23,42,0.06); max-width: 680px; margin: 0 auto;">
+                @foreach ($service['benefits'] as $highlight)
+                <div style="display: inline-flex; align-items: center; gap: 0.5rem; color: var(--color-muted); font-size: 0.875rem; font-weight: 600;">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="color: var(--color-primary); flex-shrink: 0;">
+                        <circle cx="8" cy="8" r="7.25" stroke="currentColor" stroke-width="1.5"/>
+                        <path d="M5 8L7 10L11 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    {{ $highlight }}
+                </div>
+                @endforeach
+            </div>
+            @endif
         </div>
     </div>
 </section>
 
 <section class="section-block container">
+    <div class="section-heading reveal" data-reveal style="margin-bottom: 3rem;">
+        <h2>HOW OUR MARKETING TEAM WORKS</h2>
+    </div>
     <div class="grid grid--two">
         <article class="surface-card reveal" data-reveal>
-            <p>We specify the genre/topic to appeal to specific and interested target audiences, discuss issues that are important for them, and present real solutions on their favorite platforms and sites.</p>
+            <p>We identify your genre, map your ideal reader profile, and position your book on platforms where the users are active.</p>
         </article>
         <article class="surface-card reveal" data-reveal>
-            <p>But we don't stop there since no one controls social media followings. So, there is no guarantee that they will ever convert and become loyal customers. Instead, we follow a special and ingenious strategy–we build a loyal and growing following for you through smart email marketing.</p>
+            <p>No one can control social reach. Hence, we build you a direct line to your audience through strategic email marketing that keeps readers engaged and drives long-term followers.</p>
         </article>
     </div>
 </section>
@@ -28,7 +68,7 @@
     <div class="grid grid--three">
         <article class="surface-card reveal" data-reveal>
             <span class="step-number">01</span>
-            <p>Amazon SEO Optimization</p>
+            <p>Amazon SEO Optimisation</p>
         </article>
         <article class="surface-card reveal" data-reveal>
             <span class="step-number">02</span>
@@ -48,7 +88,7 @@
         </article>
         <article class="surface-card reveal" data-reveal>
             <span class="step-number">06</span>
-            <p>Author Branding support</p>
+            <p>Author Branding Support</p>
         </article>
     </div>
 </section>
@@ -59,16 +99,20 @@
     </div>
     <div class="grid grid--two">
         <article class="surface-card reveal" data-reveal>
-            <p>Real visibility on Amazon and across the web.</p>
+            <span class="step-number">01</span>
+            <p>Visibility on online platforms like Amazon and the web.</p>
         </article>
         <article class="surface-card reveal" data-reveal>
-            <p>Higher click-through rates. More conversions. Measurable results.</p>
+            <span class="step-number">02</span>
+            <p>Higher click-through rates and more conversions.</p>
         </article>
         <article class="surface-card reveal" data-reveal>
-            <p>A growing audience that actually engages and buys.</p>
+            <span class="step-number">03</span>
+            <p>Engagement with the audience to convert them.</p>
         </article>
         <article class="surface-card reveal" data-reveal>
-            <p>An author brand that attracts real, long-term opportunities.</p>
+            <span class="step-number">04</span>
+            <p>An author brand that positions you as the go-to voice in your niche.</p>
         </article>
     </div>
 </section>

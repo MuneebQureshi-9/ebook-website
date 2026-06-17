@@ -1,38 +1,75 @@
-<section class="section-block container hero-section">
-    <div class="section-heading reveal" data-reveal>
-        <p class="section-kicker">Author Website Development</p>
-        <h1>Build Your Personal Author Brand Online</h1>
-        <p class="hero-section__text" style="max-width: 800px;">Amazon, Spotify, and Apple Books own the audience; these platforms help your message reach your readers once or twice. We help you own your audience worldwide through an author website where you connect with your audience, share your journey and stories, build trust, and long-term relationships, and later they become your subscribers or buyers year after year. With an author website, you make your audience a revenue-generating engine.</p>
-        <div class="hero-section__actions">
-            @include('components.cta-button', ['href' => route('contact', ['service' => 'author-website-development']), 'label' => 'Request a Quote'])
+<section class="section-block" style="padding-top: 3.5rem; padding-bottom: 2.5rem; background: var(--color-bg); position: relative; overflow: hidden; margin-top: -76px; padding-top: calc(76px + 3.5rem) !important;">
+    <!-- Decorative Background Orbs -->
+    <div style="position: absolute; top: -10%; left: -10%; width: 40rem; height: 40rem; background: rgba(37,99,235,0.08); border-radius: 9999px; filter: blur(100px); pointer-events: none;"></div>
+    <div style="position: absolute; top: 30%; right: -5%; width: 30rem; height: 30rem; background: rgba(99,102,241,0.07); border-radius: 9999px; filter: blur(100px); pointer-events: none;"></div>
+
+    <div class="container" style="position: relative; z-index: 1;">
+        <div class="section-heading reveal" data-reveal style="max-width: 100%; text-align: center; margin-bottom: 0;">
+            <!-- Kicker Badge -->
+            <p class="section-kicker" style="margin: 0 auto 1.25rem; display: inline-flex;">Author Website Development</p>
+            
+            <!-- Title -->
+            <h1 style="font-size: clamp(2.2rem, 5vw, 4rem); line-height: 1.08; margin-bottom: 1.25rem; max-width: 860px; margin-left: auto; margin-right: auto;">
+                Author Website Development
+            </h1>
+            
+            <!-- Subtitle -->
+            <p style="font-size: 1.25rem; color: var(--color-primary); font-weight: 600; line-height: 1.4; max-width: 700px; margin: 0 auto 1rem;">
+                We Create An Online Personality that Brings You More Sales
+            </p>
+            
+            <!-- Description -->
+            <p style="font-size: 1.1rem; color: var(--color-muted); line-height: 1.75; max-width: 720px; margin: 0 auto 2.5rem;">
+                Most of your readers are on Amazon, Spotify, Apple Books, and similar platforms. An author website builds a direct connection, grows an email list, and continues to generate revenue long after a book has been launched–it’s exactly what attracts this audience.
+            </p>
+            
+            <!-- CTA Buttons -->
+            <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; margin-bottom: 2.5rem;">
+                @include('components.cta-button', ['href' => route('contact', ['service' => 'author-website-development']), 'label' => 'Request a Quote'])
+            </div>
+
+            <!-- Trust Highlights -->
+            @if(isset($service['benefits']) && count($service['benefits']) > 0)
+            <div style="display: flex; flex-wrap: wrap; gap: 2rem; justify-content: center; padding-top: 1.5rem; border-top: 1px solid rgba(15,23,42,0.06); max-width: 680px; margin: 0 auto;">
+                @foreach ($service['benefits'] as $highlight)
+                <div style="display: inline-flex; align-items: center; gap: 0.5rem; color: var(--color-muted); font-size: 0.875rem; font-weight: 600;">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="color: var(--color-primary); flex-shrink: 0;">
+                        <circle cx="8" cy="8" r="7.25" stroke="currentColor" stroke-width="1.5"/>
+                        <path d="M5 8L7 10L11 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    {{ $highlight }}
+                </div>
+                @endforeach
+            </div>
+            @endif
         </div>
     </div>
 </section>
 
 <section class="section-block container">
     <div class="section-heading reveal" data-reveal style="margin-bottom: 3rem;">
-        <h2>FEATURES:</h2>
+        <h2>FEATURES OF OUR AUTHOR WEBSITE DEVELOPMENT SERVICES</h2>
     </div>
     <div class="grid grid--three">
         <article class="surface-card reveal" data-reveal>
             <span class="step-number">01</span>
-            <p>Custom author website designed for your brand and genre</p>
+            <p>Custom author website, specific for branding</p>
         </article>
         <article class="surface-card reveal" data-reveal>
             <span class="step-number">02</span>
-            <p>SEO-optimized pages to attract organic search traffic</p>
+            <p>SEO-optimised pages to attract organic search traffic</p>
         </article>
         <article class="surface-card reveal" data-reveal>
             <span class="step-number">03</span>
-            <p>Mobile-responsive design that looks great on every device</p>
+            <p>Mobile-responsive design that performs on every screen.</p>
         </article>
         <article class="surface-card reveal" data-reveal>
             <span class="step-number">04</span>
-            <p>Email list integration and lead capture forms</p>
+            <p>Email list integration to capture leads</p>
         </article>
         <article class="surface-card reveal" data-reveal>
             <span class="step-number">05</span>
-            <p>Book landing pages optimized for conversions</p>
+            <p>Book landing pages optimised for conversions and sign-ups.</p>
         </article>
     </div>
 </section>

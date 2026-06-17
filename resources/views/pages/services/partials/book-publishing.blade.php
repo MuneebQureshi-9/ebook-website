@@ -1,11 +1,48 @@
-<section class="section-block container hero-section">
-    <div class="section-heading reveal" data-reveal>
-        <p class="section-kicker">Book Publishing</p>
-        <h1>Publish Your Book Quickly and Easily</h1>
-        <p class="hero-section__text" style="max-width: 800px; margin-bottom: 2rem;">Publishing a book may seem like a fast and easy task on the surface, but it's never that easy. You have to build an audience for 2030 readers. If you try to self-publish, you'll face the daunting task of creating a lasting and excellent reputation as an author. That always means giving away freebies on your dime.</p>
-        <div class="hero-section__actions">
-            @include('components.cta-button', ['href' => route('contact', ['service' => 'book-publishing']), 'label' => 'Publish My Book'])
-            @include('components.cta-button', ['href' => route('contact', ['service' => 'book-publishing']), 'label' => 'Get a Free Strategy Call', 'variant' => 'secondary'])
+<section class="section-block" style="padding-top: 3.5rem; padding-bottom: 2.5rem; background: var(--color-bg); position: relative; overflow: hidden; margin-top: -76px; padding-top: calc(76px + 3.5rem) !important;">
+    <!-- Decorative Background Orbs -->
+    <div style="position: absolute; top: -10%; left: -10%; width: 40rem; height: 40rem; background: rgba(37,99,235,0.08); border-radius: 9999px; filter: blur(100px); pointer-events: none;"></div>
+    <div style="position: absolute; top: 30%; right: -5%; width: 30rem; height: 30rem; background: rgba(99,102,241,0.07); border-radius: 9999px; filter: blur(100px); pointer-events: none;"></div>
+
+    <div class="container" style="position: relative; z-index: 1;">
+        <div class="section-heading reveal" data-reveal style="max-width: 100%; text-align: center; margin-bottom: 0;">
+            <!-- Kicker Badge -->
+            <p class="section-kicker" style="margin: 0 auto 1.25rem; display: inline-flex;">Book Publishing</p>
+            
+            <!-- Title -->
+            <h1 style="font-size: clamp(2.2rem, 5vw, 4rem); line-height: 1.08; margin-bottom: 1.25rem; max-width: 860px; margin-left: auto; margin-right: auto;">
+                Book Publishing
+            </h1>
+            
+            <!-- Subtitle -->
+            <p style="font-size: 1.25rem; color: var(--color-primary); font-weight: 600; line-height: 1.4; max-width: 700px; margin: 0 auto 1rem;">
+                Your Book Deserves to Be Read and Deliver Leads
+            </p>
+            
+            <!-- Description -->
+            <p style="font-size: 1.1rem; color: var(--color-muted); line-height: 1.75; max-width: 720px; margin: 0 auto 2.5rem;">
+                Your work is only halfway finished after you’ve written a book. Most agencies find it daunting to get it in front of readers. That’s where we’re invaluable. We handle publishing– from formatting to distribution, so your work lands on shelves and screens without the headaches associated with doing it alone.
+            </p>
+            
+            <!-- CTA Buttons -->
+            <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; margin-bottom: 2.5rem;">
+                @include('components.cta-button', ['href' => route('contact', ['service' => 'book-publishing']), 'label' => 'Publish My Book'])
+                @include('components.cta-button', ['href' => route('contact', ['service' => 'book-publishing']), 'label' => 'Get a Free Strategy Call', 'variant' => 'secondary'])
+            </div>
+
+            <!-- Trust Highlights -->
+            @if(isset($service['benefits']) && count($service['benefits']) > 0)
+            <div style="display: flex; flex-wrap: wrap; gap: 2rem; justify-content: center; padding-top: 1.5rem; border-top: 1px solid rgba(15,23,42,0.06); max-width: 680px; margin: 0 auto;">
+                @foreach ($service['benefits'] as $highlight)
+                <div style="display: inline-flex; align-items: center; gap: 0.5rem; color: var(--color-muted); font-size: 0.875rem; font-weight: 600;">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="color: var(--color-primary); flex-shrink: 0;">
+                        <circle cx="8" cy="8" r="7.25" stroke="currentColor" stroke-width="1.5"/>
+                        <path d="M5 8L7 10L11 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    {{ $highlight }}
+                </div>
+                @endforeach
+            </div>
+            @endif
         </div>
     </div>
 </section>
@@ -13,45 +50,45 @@
 <section class="section-block container">
     <div class="grid grid--three">
         <article class="surface-card reveal" data-reveal>
-            <p>You have to run YouTube or paid ads to establish an outstanding reputation that leads to a growing and loyal following. If you do it right, you eventually have to monetize your following by giving them pricey freebies, once again, on your dime.</p>
+            <p>Self-publishing sounds simple until you're unable to handle ISBNs, file formats and platform rejections at midnight.</p>
         </article>
         <article class="surface-card reveal" data-reveal>
-            <p>Even then, there's never any guarantee that you'll sell enough ebooks to make up for all of the time and money you've spent in building a good reputation and following, and in promoting your books.</p>
+            <p>Even perfectly written books don’t perform without a targeted market and distribution setup.</p>
         </article>
         <article class="surface-card reveal" data-reveal>
-            <p>Give yourself a break and let us do all of the grueling work of building a reputation and loyal following through monetized (and expensive) freebies and ebook promotions. Concentrate on what you do best–penning down useful and life-changing advice, ideas, tips, thoughts, and more!</p>
+            <p>We take care of the entire technical side for you.. You focus on ideas, and we write and publish a book that can generate quality leads.</p>
         </article>
     </div>
 </section>
 
 <section class="section-block container">
     <div class="section-heading reveal" data-reveal style="margin-bottom: 3rem;">
-        <h2>OUR SERVICES</h2>
+        <h2>OUR BOOK PUBLISHING SERVICES</h2>
     </div>
     <div class="grid grid--three">
         <article class="surface-card reveal" data-reveal>
             <span class="step-number">01</span>
-            <p>Amazon Kindle Publishing</p>
+            <p>Amazon Kindle Direct Publishing</p>
         </article>
         <article class="surface-card reveal" data-reveal>
             <span class="step-number">02</span>
-            <p>Paperback & Print Publishing</p>
+            <p>Paperback & print publishing</p>
         </article>
         <article class="surface-card reveal" data-reveal>
             <span class="step-number">03</span>
-            <p>ISBN Setup</p>
+            <p>ISBN registration and barcode setup</p>
         </article>
         <article class="surface-card reveal" data-reveal>
             <span class="step-number">04</span>
-            <p>Professional Formatting</p>
+            <p>Professional interior formatting for both print and digital</p>
         </article>
         <article class="surface-card reveal" data-reveal>
             <span class="step-number">05</span>
-            <p>Metadata Optimization for Visibility</p>
+            <p>Metadata and keyword optimization</p>
         </article>
         <article class="surface-card reveal" data-reveal>
             <span class="step-number">06</span>
-            <p>Global Distribution Support</p>
+            <p>Global distribution to 40+ retailers and libraries</p>
         </article>
     </div>
 </section>
@@ -62,13 +99,13 @@
     </div>
     <div class="grid grid--three">
         <article class="surface-card reveal" data-reveal>
-            <p>No technical headaches or time-consuming, fatal mistake-prone learning curves. Superior publishing services–exceeding any traditional publishing house.</p>
+            <p>Zero technical overwhelm as we handle every platform</p>
         </article>
         <article class="surface-card reveal" data-reveal>
-            <p>A faster, frictionless path from manuscript to published book.</p>
+            <p>A straight line from finished manuscript to published book</p>
         </article>
         <article class="surface-card reveal" data-reveal>
-            <p>Optimized from day one for search, sales, and discoverability.</p>
+            <p>Built for discoverability from day one</p>
         </article>
     </div>
 </section>

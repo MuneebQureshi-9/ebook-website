@@ -80,7 +80,6 @@
 
                 <a href="{{ route('about') }}">About</a>
                 <a href="{{ route('portfolio') }}">Portfolio</a>
-                <a href="{{ route('blog') }}">Blog</a>
                 <a href="{{ route('faq') }}">FAQ</a>
                 <a href="{{ route('contact') }}">Contact</a>
             </nav>
@@ -166,7 +165,6 @@
 
             <a href="{{ route('about') }}" class="mobile-menu__link">About</a>
             <a href="{{ route('portfolio') }}" class="mobile-menu__link">Portfolio</a>
-            <a href="{{ route('blog') }}" class="mobile-menu__link">Blog</a>
             <a href="{{ route('faq') }}" class="mobile-menu__link">FAQ</a>
             <a href="{{ route('contact') }}" class="mobile-menu__link">Contact</a>
             <div class="mobile-menu__cta">
